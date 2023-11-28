@@ -20,4 +20,8 @@ class Store(models.Model):
         ordering=['store_name']
 
 class Profile(models.Model):
-    
+    user_id = models.ForeignKey(User, related_name='user_profile', on_delete=models.CASCADE)
+    address = models.CharField(max_length=350)
+
+    def __str__(self):
+        return self.user_id.username
