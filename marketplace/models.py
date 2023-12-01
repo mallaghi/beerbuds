@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import MinLengthValidator
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 # Create your models here.
 
@@ -25,3 +26,51 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user_id.username
+
+
+class Beer(models.Model):
+    name = models.CharField(max_length=255, blank=False, null=False)
+    description = models.TextField(blank=False, validators=[ MinLengthValidator(50, 'Please enter a description of at least 50 characters')])
+    stock_quantity = models.IntegerField(blank=False, null=False)
+    price = models.DecimalField(blank=False, null=False, max_digits=6, decimal_places=2)
+    store_id = models.ForeignKey(Store, related_name='beer_store', on_delete=models.CASCADE)
+    beer_image = models.ImageField(upload_to='beer_images', blank=False, null=False)
+    volume = models.DecimalField(max_digits=6, decimal_places=2)
+    abv = models.DecimalField(max_digits=6, decimal_places=1)
+    ingredients = models.TextField(validators=[ MinLengthValidator(50, 'Please enter a description of at least 50 characters')])
+
+    def __str__(self):
+        return self.name
+
+
+class OrderItem(models.Model):
+    beer_id = models.ForeignKey(Beer, related_name='beer_order', on_delete=models.CASCADE)
+    quantity = models.IntegerField(blank=False, null=False, default=1)
+    def __str__(self):
+        return self.beer_id.name + str(self.quantity)
+
+
+class Order(models.Model):
+    profile_id = models.ForeignKey(Profile, related_name='user_order', on_delete=models.CASCADE)
+    order_date = models.DateTimeField(default=timezone.now)
+    total_price = models.DecimalField(blank=False, null=False, max_digits=6, decimal_places=2)
+    order_items = models.ManyToManyField(OrderItem)
+
+    def __str__(self):
+        return str(self.id)
+
+class CartItem(models.Model):
+    beer_id = models.ForeignKey(Beer, related_name='beer_cart', on_delete=models.CASCADE)
+    quantity = models.IntegerField(blank=False, null=False, default=1)
+
+    def __str__(self):
+        return self.beer_id.name + str(self.quantity)
+
+
+class Cart(models.Model):
+    profile_id = models.ForeignKey(Profile, related_name='user_cart', on_delete=models.CASCADE)
+    cart_items = models.ManyToManyField(CartItem)
+    total_price = models.DecimalField(blank=False, null=False, max_digits=6, decimal_places=2)
+
+    def __str__(self):
+        return str(self.id)
