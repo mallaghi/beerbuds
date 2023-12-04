@@ -1,4 +1,4 @@
 <h1>Hi</h1>
 {% for beer in beers %}
-  {{ beer.name }}
+  <a href="{% url 'marketplace:beer_show' beer.id %}"> {{ beer.name }} </a>
 {% endfor %}
