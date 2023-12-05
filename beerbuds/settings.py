@@ -41,8 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'marketplace',
     'user_actions',
-    'chat'
-
+    'chat',
+    'django_extensions',
+    'core'
 ]
 
 MIDDLEWARE = [

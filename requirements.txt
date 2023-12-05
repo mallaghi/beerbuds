@@ -1,6 +1,14 @@
 asgiref==3.7.2
+certifi==2023.7.22
+distlib==0.3.7
 Django==4.2.7
+django-extensions==3.2.3
+filelock==3.13.1
 Pillow==10.1.0
+pipenv==2023.10.24
+platformdirs==3.11.0
 psycopg2==2.9.9
+setuptools==68.2.2
 sqlparse==0.4.4
+virtualenv==20.24.6
 wheel==0.42.0
