@@ -3,9 +3,9 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 
 class LoginForm(AuthenticationForm):
-    email = forms.CharField(widget=forms.TextInput
+    username = forms.CharField(widget=forms.TextInput
     (attrs={
-        'placeholder': 'Your email',
+        'placeholder': 'Your username',
         'class': 'w-full py-4 px-6 rounded-xl'
 
     }))
