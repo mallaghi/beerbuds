@@ -1,4 +1,9 @@
-<h1>Hi</h1>
-{% for beer in beers %}
-  <a href="{% url 'marketplace:beer_show' beer.id %}"> {{ beer.name }} </a>
-{% endfor %}
+{% extends "core/base.html"%}
+{%block title%} Beers {% endblock %}
+{% block content %}
+
+  {% for beer in beers %}
+    <a href="{% url 'marketplace:beer_show' beer.id %}"> {{ beer.name }} </a>
+  {% endfor %}
+
+{% endblock %}
