@@ -1,2 +1,6 @@
-<h1>Hi</h1>
+{% extends "core/base.html"%}
+{%block title%} {{ beer.name }} {%endblock%}
+{% block content %}
 {{ beer.name }}
+{% endblock %}
+
