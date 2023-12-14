@@ -18,3 +18,11 @@ def signup(request):
         form = SignupForm()
 
     return render(request, 'core/signup.html', {'form': form})
+
+def profile(request):
+    if request.user.is_authenticated:
+        current_username = request.user.username
+    else:
+        current_username = None
+    context = {'current_username': current_username}
+    return render(request, 'core/profile.html', context)
