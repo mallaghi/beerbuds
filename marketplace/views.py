@@ -15,6 +15,8 @@ def beer_show(request, id):
   return render(request, 'marketplace/beer_show.html', {'beer': beer })
 
 def create_store(request):
+    # if you have a store, then the form will not appear and you will get an error message or redirected to home
+
     if request.method == 'POST':
         store = Store(user_id=request.user)
         form = StoreForm(request.POST, instance=store)
@@ -22,7 +24,12 @@ def create_store(request):
             store.save()
             # messages.success("Successfully added!")
             # Redirect to the store dashboard template or another page upon successful creation
-            return redirect('/')
+            return redirect('/store_dashboard')
     else:
         form = StoreForm()
     return render(request, 'marketplace/create_store.html', {'form': form})
+
+def store_dash(request):
+   # multiple store dashboard
+   stores = Store.objects.all()
+   return render(request, 'marketplace/store_dash.html', {'stores': stores})
