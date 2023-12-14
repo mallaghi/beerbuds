@@ -10,3 +10,11 @@ def beer_index(request):
 def beer_show(request, id):
   beer = get_object_or_404(Beer, id=id)
   return render(request, 'marketplace/beer_show.html', {'beer': beer })
+
+def profile(request):
+    if request.user.is_authenticated:
+        current_username = request.user.username
+    else:
+        current_username = None
+    context = {'current_username': current_username}
+    return render(request, 'marketplace/profile.html', context)
