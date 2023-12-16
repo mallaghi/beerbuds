@@ -12,7 +12,7 @@ class Store(models.Model):
     description = models.TextField(validators=[
             MinLengthValidator(100, 'Please enter a description of at least 100 characters')
         ])
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_id = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.store_name

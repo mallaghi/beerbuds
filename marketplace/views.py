@@ -31,5 +31,5 @@ def create_store(request):
 
 def store_dash(request):
    # multiple store dashboard
-   stores = Store.objects.all()
-   return render(request, 'marketplace/store_dash.html', {'stores': stores})
+   store = Store.objects.filter(user_id=request.user)
+   return render(request, 'marketplace/store_dash.html', {'store': store})
