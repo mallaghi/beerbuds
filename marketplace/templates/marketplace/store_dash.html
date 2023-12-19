@@ -1,16 +1,20 @@
 {% extends "core/base.html" %}
 {%block title%} Your Store {% endblock %}
 {% block content %}
-<h1> STORE DASHBOARD </h1>
-
-{% for store in store %}
+<div>
+  <h1> STORE DASHBOARD </h1>
+</div>
+<div>
+  {% for store in store %}
   My Store's details:
   {{ store.store_name}}
   {{ store.store_email}}
   {{store.phone_number}}
 {% endfor %}
+</div>
 
-
-
+<div>
+  <a href="{% url 'marketplace:create_beer'%}" class="mt-6  px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700"> Create Beer </a>
+</div>
 
 {% endblock  %}

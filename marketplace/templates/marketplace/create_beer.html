@@ -1,0 +1,55 @@
+{% extends "core/base.html"%}
+{%block title%} New Beer {%endblock%}
+{% block content %}
+
+<h1>TESTING</h1>
+
+<div >
+  <h1> Create Your Beer </h1>
+  <form method="post" action="">
+    {% csrf_token %}
+    <div>
+      <label>Beer Name</label><br>
+      {{ form.name }}
+    </div>
+    <div>
+      <label>Beer description</label><br>
+      {{ form.description }}
+    </div>
+    <div>
+      <label>Beer stock</label><br>
+      {{ form.stock_quantity }}
+    </div>
+    <div>
+      <label>Beer price (per unit)</label><br>
+      {{ form.price }}
+    </div>
+    <div>
+      <label>Beer image</label><br>
+      {{ form.beer_image }}
+    </div>
+    <div>
+      <label>Beer volume</label><br>
+      {{ form.volume }}
+    </div>
+    <div>
+      <label>Beer abv</label><br>
+      {{ form.abv }}
+    </div>
+    <div>
+      <label>Beer ingredients</label><br>
+      {{ form.ingredients }}
+    </div>
+
+    <button type="submit">Submit</button>
+
+    {% if form.errors or form.non_field_errors %}
+    <div>
+      {% for field in form %}
+        {{ field.errors }}
+      {% endfor %}
+      {{ form.non_field_errors }}
+    </div>
+  {% endif %}
+
+{% endblock %}

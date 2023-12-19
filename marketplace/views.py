@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
-from .forms import StoreForm
+from .forms import StoreForm, BeerForm
 from .models import Beer, Store, User
 
 # Create your views here.
@@ -38,3 +38,14 @@ def profile(request):
         current_username = None
     context = {'current_username': current_username}
     return render(request, 'marketplace/profile.html', context)
+
+def create_beer(request):
+    if request.method == "POST":
+        beer = Beer(store_id=request.user.store)
+        form = BeerForm(request.POST, instance=beer)
+        if form.is_valid():
+            beer.save()
+            return redirect('/store_dashboard')
+    else:
+        form = BeerForm()
+    return render(request, 'marketplace/create_beer.html', {'form': form})
