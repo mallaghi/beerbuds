@@ -4,5 +4,6 @@ app_name = 'marketplace'
 
 urlpatterns = [
     path('beers/', views.beer_index),
-    path('beer/<int:id>/', views.beer_show, name='beer_show')
+    path('beer/<int:id>/', views.beer_show, name='beer_show'),
+    path('profile/', views.profile, name='profile')
 ]
