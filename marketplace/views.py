@@ -15,8 +15,6 @@ def beer_show(request, id):
   return render(request, 'marketplace/beer_show.html', {'beer': beer })
 
 def create_store(request):
-    # if you have a store, then the form will not appear and you will get an error message or redirected to home
-
     if request.method == 'POST':
         store = Store(user_id=request.user)
         form = StoreForm(request.POST, instance=store)
@@ -30,6 +28,13 @@ def create_store(request):
     return render(request, 'marketplace/create_store.html', {'form': form})
 
 def store_dash(request):
-   # multiple store dashboard
    store = Store.objects.filter(user_id=request.user)
    return render(request, 'marketplace/store_dash.html', {'store': store})
+
+def profile(request):
+    if request.user.is_authenticated:
+        current_username = request.user.username
+    else:
+        current_username = None
+    context = {'current_username': current_username}
+    return render(request, 'marketplace/profile.html', context)

@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import SignupForm
+from marketplace.models import Profile
 from django.http import HttpResponse
 
 def home(request):
@@ -9,7 +10,8 @@ def signup(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            Profile.objects.create(user_id=user,address='')
             return redirect('/login')
 
     else:
