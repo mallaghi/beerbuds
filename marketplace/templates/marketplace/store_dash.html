@@ -1,0 +1,16 @@
+{% extends "core/base.html" %}
+{%block title%} Your Store {% endblock %}
+{% block content %}
+<h1> STORE DASHBOARD </h1>
+
+{% for store in store %}
+  My Store's details:
+  {{ store.store_name}}
+  {{ store.store_email}}
+  {{store.phone_number}}
+{% endfor %}
+
+
+
+
+{% endblock  %}
