@@ -5,17 +5,16 @@
   <h1> STORE DASHBOARD </h1>
 </div>
 
-{{ store }}
 <div>
   {% for store in store %}
-    My Store's details:
-    {{ store.store_name}}
-    {{ store.store_email}}
-    {{ store.phone_number}}
+    <h2> My Store's Name: </h2>
+    <li> {{ store.store_name}} </li>
+
+    {{ store.beer_store.all }}
+    
      {% for beers in store.beer_store.all %}
-      {{ beers }}
-      <!-- <p> Beer name: {{ beer.name }} </p> -->
-    {% endfor %}
+      <li> {{ beers.name }} </li>
+     {% endfor %}
   {% endfor %}
 </div>
 
