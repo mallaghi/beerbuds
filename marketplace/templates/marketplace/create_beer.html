@@ -6,7 +6,7 @@
 
 <div >
   <h1> Create Your Beer </h1>
-  <form method="post" action="">
+  <form enctype="multipart/form-data" method="post" action="/store_dashboard/create_beer/">
     {% csrf_token %}
     <div>
       <label>Beer Name</label><br>

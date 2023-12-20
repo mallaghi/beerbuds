@@ -42,7 +42,7 @@ def profile(request):
 def create_beer(request):
     if request.method == "POST":
         beer = Beer(store_id=request.user.store)
-        form = BeerForm(request.POST, instance=beer)
+        form = BeerForm(request.POST, request.FILES, instance=beer)
         if form.is_valid():
             beer.save()
             return redirect('/store_dashboard')
