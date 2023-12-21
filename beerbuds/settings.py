@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'user_actions',
     'chat',
     'django_extensions',
-    'core'
+    'core',
 ]
 
 MIDDLEWARE = [
