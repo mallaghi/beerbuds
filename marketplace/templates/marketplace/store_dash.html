@@ -1,25 +1,21 @@
 {% extends "core/base.html" %}
 {%block title%} Your Store {% endblock %}
 {% block content %}
-<div>
-  <h1> STORE DASHBOARD </h1>
-</div>
+<div class = 'flex justify-around'>
 
-<div>
-  {% for store in store %}
-    <h2> My Store's Name: </h2>
-    <li> {{ store.store_name}} </li>
-
-    {{ store.beer_store.all }}
-    
-     {% for beers in store.beer_store.all %}
+  <div>
+      <h1 class="text-center font-bold" > STORE DASHBOARD </h1>
+    {% for store in store %}
+    <h2> My Store's Name: {{ store.store_name}}</h2>
+    {% for beers in store.beer_store.all %}
       <li> {{ beers.name }} </li>
-     {% endfor %}
+    {% endfor %}
   {% endfor %}
-</div>
+  </div>
 
-<div>
-  <a href="{% url 'marketplace:create_beer'%}" class="mt-6  px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700"> Create Beer </a>
-</div>
+  <div>
+    <a href="{% url 'marketplace:create_beer'%}" class="px-2 py-2 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700"> Sell Your Beer </a>
+  </div>
 
+</div>
 {% endblock  %}

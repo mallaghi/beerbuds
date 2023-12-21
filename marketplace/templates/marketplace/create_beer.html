@@ -2,46 +2,47 @@
 {%block title%} New Beer {%endblock%}
 {% block content %}
 
-<h1>TESTING</h1>
+<div class="w-1/2 mx-auto my-6 p-6 bg-gray-100 rounded-xl flex justify-center">
+  <div>
+    <h1> <strong>Create Your Beer </strong> </h1>
+    <form enctype="multipart/form-data" method="post" action="/store_dashboard/create_beer/">
+      {% csrf_token %}
+      <div class='mb-4'>
+        <label class="inline-block mb-2"  >Beer Name</label><br>
+        {{ form.name }}
+      </div>
+      <div class='mb-3'>
+        <label class="inline-block mb-2">Beer description</label><br>
+        {{ form.description }}
+      </div>
+      <div class='mb-3'>
+        <label class="inline-block mb-2">Beer stock</label><br>
+        {{ form.stock_quantity }}
+      </div>
+      <div class='mb-3'>
+        <label class="inline-block mb-2">Beer price (per unit)</label><br>
+        {{ form.price }}
+      </div>
+      <div class='mb-3'>
+        <label class="inline-block mb-2">Beer image</label><br>
+        {{ form.beer_image }}
+      </div>
+      <div class='mb-3'>
+        <label class="inline-block mb-2">Beer volume</label><br>
+        {{ form.volume }}
+      </div>
+      <div class='mb-3'>
+        <label class="inline-block mb-2">Beer abv</label><br>
+        {{ form.abv }}
+      </div>
+      <div class='mb-3'>
+        <label class="inline-block mb-2">Beer ingredients</label><br>
+        {{ form.ingredients }}
+      </div>
 
-<div >
-  <h1> Create Your Beer </h1>
-  <form enctype="multipart/form-data" method="post" action="/store_dashboard/create_beer/">
-    {% csrf_token %}
-    <div>
-      <label>Beer Name</label><br>
-      {{ form.name }}
-    </div>
-    <div>
-      <label>Beer description</label><br>
-      {{ form.description }}
-    </div>
-    <div>
-      <label>Beer stock</label><br>
-      {{ form.stock_quantity }}
-    </div>
-    <div>
-      <label>Beer price (per unit)</label><br>
-      {{ form.price }}
-    </div>
-    <div>
-      <label>Beer image</label><br>
-      {{ form.beer_image }}
-    </div>
-    <div>
-      <label>Beer volume</label><br>
-      {{ form.volume }}
-    </div>
-    <div>
-      <label>Beer abv</label><br>
-      {{ form.abv }}
-    </div>
-    <div>
-      <label>Beer ingredients</label><br>
-      {{ form.ingredients }}
+      <button type="submit">Submit</button>
     </div>
 
-    <button type="submit">Submit</button>
 
     {% if form.errors or form.non_field_errors %}
     <div>

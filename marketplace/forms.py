@@ -9,6 +9,10 @@ class StoreForm(forms.ModelForm):
 
 
 class BeerForm(forms.ModelForm):
+    name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Enter your Beer here'}))
+    description = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Show the customer some information about the beer'}))
+    ingredients = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Hops, yeast, malted grains, water...'}))
+
     class Meta:
         model = Beer
         fields = ['name', 'description', 'stock_quantity', 'price',
