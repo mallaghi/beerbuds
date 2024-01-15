@@ -1,0 +1,33 @@
+{% extends 'core/base.html' %}
+
+{% block title %} Review Beer {% endblock %}
+
+{% block content %}
+
+<div >
+  <h1> Post your Review </h1>
+  <form method="post" action="">
+    {% csrf_token %}
+    <div>
+      <label>Write your review</label><br>
+      {{ form.review_content }}
+    </div>
+    <div>
+      <label>Your rating</label><br>
+      {{ form.rating }}
+    </div>
+
+    <button type="submit">Submit</button>
+
+    {% if form.errors or form.non_field_errors %}
+    <div>
+      {% for field in form %}
+        {{ field.errors }}
+      {% endfor %}
+      {{ form.non_field_errors }}
+    </div>
+  {% endif %}
+
+</div>
+
+{% endblock %}
