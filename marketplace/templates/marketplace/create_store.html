@@ -3,29 +3,30 @@
 {% block title %} Create Store {% endblock %}
 
 {% block content %}
+<div class="w-1/2 mx-auto my-6 p-6 bg-gray-100 rounded-xl flex justify-center">
+  <div>
+    <h1> <strong>Create Store </strong> </h1>
+    <form method="post" action="">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label class="inline-block mb-2">Store Name</label><br>
+        {{ form.store_name }}
+      </div>
+      <div class="mb-3">
+        <label class="inline-block mb-2">Your Store Email</label><br>
+        {{ form.store_email }}
+      </div>
+      <div class="mb-3">
+        <label class="inline-block mb-2">Phone Number</label><br>
+        {{ form.phone_number }}
+      </div>
+      <div class="mb-3">
+        <label class="inline-block mb-2">Describe your Store</label><br>
+        {{ form.description }}
+      </div>
 
-<div >
-  <h1> Create Store </h1>
-  <form method="post" action="">
-    {% csrf_token %}
-    <div>
-      <label>Store Name</label><br>
-      {{ form.store_name }}
+      <button type="submit">Submit</button>
     </div>
-    <div>
-      <label>Your Store Email</label><br>
-      {{ form.store_email }}
-    </div>
-    <div>
-      <label>Phone Number</label><br>
-      {{ form.phone_number }}
-    </div>
-    <div>
-      <label>Describe your Store</label><br>
-      {{ form.description }}
-    </div>
-
-    <button type="submit">Submit</button>
 
     {% if form.errors or form.non_field_errors %}
     <div>
