@@ -2,5 +2,8 @@
 {%block title%} {{ beer.name }} {%endblock%}
 {% block content %}
 {{ beer.name }}
+<br><br>
+{{ beer.description }}
+<br><br>
+<a href="{% url 'user_actions:create_review' beer.id %}">Write a Review</a>
 {% endblock %}
-
