@@ -71,3 +71,9 @@ def create_review(request, beer_id):
         form = ReviewForm()
 
     return render(request, 'user_actions/create_review.html', {'form': form, 'beer': beer})
+
+
+
+def reviews_index(request):
+    reviews = Review.objects.all()
+    return render(request, 'user_actions/reviews_index.html', {'reviews': reviews})
