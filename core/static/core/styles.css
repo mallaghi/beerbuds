@@ -42,9 +42,6 @@ a{
   opacity: 0.4;
   transition: all ease 0.3s;
 }
-.menu .active{
-  opacity: 1;
-}
 .menu li a:hover{
   opacity: 1;
   transition: all ease 0.3s;
