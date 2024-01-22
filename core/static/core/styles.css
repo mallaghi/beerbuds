@@ -69,3 +69,6 @@ a{
   color: #cf2728;
   transition: all ease 0.2s;
 }
+.content{
+  padding: 6rem 6rem;
+}
