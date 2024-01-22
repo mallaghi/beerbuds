@@ -28,7 +28,7 @@ a{
   top: 0px;
   width: 100%;
   z-index: 100;
-  background-color: #ffffff;
+  background-color: #080808;
   border: 1px solid rgba(0,0,0,0.03);
 }
 .menu{
@@ -37,7 +37,7 @@ a{
 .menu li a{
   margin: 5px;
   padding: 5px 20px;
-  color: #2e2e2e;
+  color: #ffffff;
   font-weight: 500;
   opacity: 0.4;
   transition: all ease 0.3s;
@@ -51,7 +51,7 @@ a{
 }
 .logo{
   font-size: 2.1rem;
-  color: #0e0606;
+  color: #ffffff;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   font-weight: 600;
@@ -63,7 +63,7 @@ a{
 }
 .right-elements a{
   margin: 0px 10px;
-  color: #0e0606;
+  color: #ffffff;
 }
 .right-elements a:hover{
   color: #cf2728;
@@ -74,7 +74,7 @@ a{
 }
 /* footer ============================== */
 footer{
-  background-color: #f5f5f5;
+  background-color: #080808;
   padding: 60px 10px;
   position: relative;
   margin-top: 20px;
@@ -99,7 +99,7 @@ footer{
   justify-content: center;
   align-items: center;
   font-size: 2rem;
-  color: #131313;
+  color: #ffffff;
   text-transform: uppercase;
   font-weight: 700;
   letter-spacing: 1px;
@@ -144,7 +144,7 @@ footer{
   margin: 0px 30px;
 }
 .footer-menu-box strong{
-  color: #292929;
+  color: #888888;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -163,10 +163,10 @@ footer{
 .copyright {
   padding: 5px;
   color: #5a5a5a;
-  background-color: f0f0f0;
+  background-color: #080808;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid rgba(0,0,0,0.06);
+  border: 1px solid rgba(27, 23, 23, 0.06);
   font-size: 0.9rem;
 }
