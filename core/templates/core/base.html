@@ -19,10 +19,10 @@
 <body>
     {% comment %} Navigation bar============================== {% endcomment %}
     <nav class= "navigation">
-      <a href="#" class="logo">logo</a>
+      <a href="{% url 'core:home' %}" class="logo">logo</a>
       <ul class="menu">
-        <li><a href="#" class="active">HOME</a></li>
-        <li><a href="#">CREATE A STORE</a></li>
+        <li><a href="{% url 'core:home' %}" class="active">HOME</a></li>
+        <li><a href="{% url 'marketplace:create_store' %}">CREATE A STORE</a></li>
         <li><a href="#">US</a></li>
       </ul>
     {% comment %} Right Elements================================= {% endcomment %}
@@ -33,7 +33,7 @@
         <a href ="#" class="cart">
           <i class="fas fa-cart-shopping"></i>
         </a>
-        <a href ="#" class="user">
+        <a href ="{% url 'marketplace:profile' %}" class="user">
           <i class="fas fa-user"></i>
         </a>
       </div>
