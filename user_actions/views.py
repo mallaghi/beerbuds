@@ -43,16 +43,13 @@
 
 #     return render(request, 'user_actions/create_review.html', {'form': form, 'beer': beer})
 
+from django.urls import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from marketplace.models import Profile
 from .models import Review, Beer
 from .forms import ReviewForm
 
 def create_review(request, beer_id):
-    # # Ensure that the user is authenticated before proceeding
-    # if not request.user.is_authenticated:
-    #     return redirect('login')  # Redirect to the login page or handle authentication as needed
-
     # Get the user's profile
     profile = get_object_or_404(Profile, user_id=request.user)
 
@@ -66,7 +63,9 @@ def create_review(request, beer_id):
             review.profile_id = profile
             review.beer_id = beer
             review.save()
-            return redirect('/beers')
+
+            redirect_url = reverse('marketplace:beer_show', kwargs={'id': beer_id})
+            return redirect(redirect_url)
     else:
         form = ReviewForm()
 
@@ -76,4 +75,8 @@ def create_review(request, beer_id):
 
 def reviews_index(request):
     reviews = Review.objects.all()
-    return render(request, 'user_actions/reviews_index.html', {'reviews': reviews})
+    return render(request, 'user_actions/reviews_index.html', {'all_reviews': reviews})
+
+def beer_reviews_index(request,id):
+    reviews = Review.objects.filter(beer_id=id)
+    return render(request, 'user_actions/beer_reviews_index.html', {'beer_reviews': reviews})

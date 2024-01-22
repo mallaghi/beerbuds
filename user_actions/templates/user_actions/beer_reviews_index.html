@@ -2,10 +2,12 @@
 {%block title%} Reviews {%endblock%}
 {% block content %}
 
-{% for review in reviews %}
+{% for review in beer_reviews %}
   <br></br>
   {{ review.review_content }}
   {{ review.rating }}
+  {{ review.profile_id }}
+  {{ review.beer_id }}
 {% endfor %}
 
 {% endblock %}
