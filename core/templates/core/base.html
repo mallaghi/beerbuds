@@ -33,9 +33,14 @@
         <a href ="#" class="cart">
           <i class="fas fa-cart-shopping"></i>
         </a>
-        <a href ="{% url 'marketplace:profile' %}" class="user">
-          <i class="fas fa-user"></i>
-        </a>
+        {% if user.is_authenticated %}
+            <a href ="{% url 'marketplace:profile' %}" class="user">
+              <i class="fas fa-user"></i>
+            </a>
+        {% else %}
+            <a href="{% url 'core:signup' %}">Sign up</a>
+            <a href="{% url 'core:login' %}">Login</a>
+        {% endif %}
       </div>
     </nav>
     {% comment %} Navigation End================================ {% endcomment %}
