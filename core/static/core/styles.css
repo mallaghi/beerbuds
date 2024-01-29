@@ -51,7 +51,7 @@ a{
   color: #ffffff;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  font-weight: 600;
+  font-weight: 400;
 }
 .right-elements{
   display: flex;
@@ -95,7 +95,7 @@ footer{
   color: #ffffff;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  font-weight: 600;
+  font-weight: 400;
 }
 .footer-logo-container span{
   color: #888888;
