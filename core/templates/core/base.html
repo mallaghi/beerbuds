@@ -22,7 +22,11 @@
       <a href="{% url 'core:home' %}" class="logo">Beerbuds</a>
       <ul class="menu">
         <li><a href="{% url 'core:home' %}">HOME</a></li>
-        <li><a href="{% url 'marketplace:create_store' %}">CREATE A STORE</a></li>
+        {% if has_store %}
+            <li><a href="{% url 'marketplace:store_dash' %}">VISIT YOUR STORE</a></li>
+        {% else %}
+            <li><a href="{% url 'marketplace:create_store' %}">CREATE A STORE</a></li>
+        {% endif %}
         <li><a href="#">US</a></li>
       </ul>
     {% comment %} Right Elements================================= {% endcomment %}
