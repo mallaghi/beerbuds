@@ -36,7 +36,9 @@ def profile(request):
         current_username = request.user.username
     else:
         current_username = None
-    context = {'current_username': current_username}
+    context = {
+        'current_username': current_username,
+        }
     return render(request, 'marketplace/profile.html', context)
 
 def create_beer(request):
