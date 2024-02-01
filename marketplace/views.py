@@ -51,3 +51,8 @@ def create_beer(request):
     else:
         form = BeerForm()
     return render(request, 'marketplace/create_beer.html', {'form': form})
+
+def delete_beer(request, id):
+    beer = Beer.objects.get(pk=id)
+    beer.delete
+    return HttpResponse("Your Beer has been deleted!")

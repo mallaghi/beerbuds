@@ -7,8 +7,13 @@
       <h1 class="text-center font-bold" > STORE DASHBOARD </h1>
     {% for store in store %}
     <h2> My Store's Name: {{ store.store_name}}</h2>
-    {% for beers in store.beer_store.all %}
-      <li> {{ beers.name }} </li>
+    {% for beer in store.beer_store.all %}
+      <h4> {{ beer.name }} </h4>
+      <ul>
+        <li> £{{beer.price}} </li>
+        <li> {{beer.abv}}% </li>
+      </ul>
+      <a href="{% url 'marketplace:delete_beer' %}"></a>
     {% endfor %}
   {% endfor %}
   </div>
