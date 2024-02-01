@@ -1,5 +1,5 @@
 from django import forms
-from .models import Review
+from .models import Review, Favourite
 
 class ReviewForm(forms.ModelForm):
     class Meta:
@@ -8,7 +8,7 @@ class ReviewForm(forms.ModelForm):
         exclude = ('profile_id', 'beer_id')
 
     review_content = forms.CharField(widget=forms.Textarea(attrs={
-        'placeholder': 'Your review',
+        'placeholder': 'Your review (minimum 50 characters)',
         'class': 'w-full py-4 px-6 rounded-xl border-2 border-gray-200'
     }))
 
@@ -16,3 +16,8 @@ class ReviewForm(forms.ModelForm):
         'placeholder': 'Your rating',
         'class': 'w-full py-4 px-6 rounded-xl border-2 border-gray-200'
     }))
+
+class FavouriteForm(forms.ModelForm):
+    class Meta:
+        model = Favourite
+        exclude = ('profile_id', 'beer_id')
