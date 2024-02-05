@@ -52,7 +52,15 @@ def create_beer(request):
         form = BeerForm()
     return render(request, 'marketplace/create_beer.html', {'form': form})
 
+
+def store_dash(request):
+   store = Store.objects.filter(user_id=request.user)
+   return render(request, 'marketplace/store_dash.html', {'store': store})
+
+# this is what we can access from store_dash --> store and store info.
+# so below line will not work
+
 def delete_beer(request, id):
     beer = Beer.objects.get(pk=id)
-    beer.delete
-    return HttpResponse("Your Beer has been deleted!")
+    beer.delete()
+    return redirect('/store_dashboard')
