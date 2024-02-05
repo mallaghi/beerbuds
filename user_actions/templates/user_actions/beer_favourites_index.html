@@ -1,0 +1,13 @@
+{% extends "core/base.html"%}
+{%block title%} Favourites {%endblock%}
+{% block content %}
+
+
+
+{% for favourites in beer_favourites %}
+  <br></br>
+  {{ favourites.profile_id }}
+  {{ favourites.beer_id }}
+{% endfor %}
+
+{% endblock %}
