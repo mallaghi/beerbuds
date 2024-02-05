@@ -8,7 +8,7 @@
     <form enctype="multipart/form-data" method="post" action="/store_dashboard/create_beer/">
       {% csrf_token %}
       <div class='mb-4'>
-        <label class="inline-block mb-2"  >Beer Name</label><br>
+        <label class="inline-block mb-2">Beer Name</label><br>
         {{ form.name }}
       </div>
       <div class='mb-3'>
@@ -52,5 +52,5 @@
       {{ form.non_field_errors }}
     </div>
   {% endif %}
-
+</div>
 {% endblock %}
