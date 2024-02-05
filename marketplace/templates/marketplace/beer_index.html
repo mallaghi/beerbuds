@@ -2,8 +2,13 @@
 {%block title%} Beers {% endblock %}
 {% block content %}
 
-  {% for beer in beers %}
-    <a href="{% url 'marketplace:beer_show' beer.id %}"> {{ beer.name }} </a>
-  {% endfor %}
-
+  <div class="grid grid-cols-3 gap-4 content-start" >
+    {% for beer in beers %}
+      <div>
+        <div class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-700">
+          <a href="{% url 'marketplace:beer_show' beer.id %}" class="text-sm mb-4"> {{ beer.name }} </a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
 {% endblock %}
