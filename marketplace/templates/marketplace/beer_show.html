@@ -1,6 +1,27 @@
-{% extends "core/base.html"%}
-{%block title%} {{ beer.name }} {%endblock%}
-{% block content %}
-{{ beer.name }}
-{% endblock %}
+{% extends "core/base.html" %}
 
+{% block title %}{{ beer.name }}{% endblock %}
+
+{% block content %}
+  <div class="p-4">
+    <a href="{% url 'marketplace:beer_index' %}" class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-700">  <-- Back to beers </a>
+  </div>
+
+  <div class="p-4">
+      <h1 class="text-2xl font-bold mb-4">{{ beer.name }}</h1>
+
+      <p class="text-sm mb-4">{{ beer.description }}</p>
+
+      <div>
+        <a href="{% url 'user_actions:create_review' beer.id %}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">Write a Review</a>
+
+        <a href="{% url 'user_actions:beer_reviews_index' beer.id %}" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700">See Reviews</a>
+
+        <a href="{% url 'user_actions:add_favourite' beer.id %}" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-700">Add to Favourites</a>
+
+        <a href="{% url 'user_actions:beer_favourites_index' beer.id %}" class="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-700">See Favourites</a>
+
+      </div>
+  </div>
+
+{% endblock %}

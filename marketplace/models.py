@@ -42,7 +42,6 @@ class Beer(models.Model):
     def __str__(self):
         return self.name
 
-
 class OrderItem(models.Model):
     beer_id = models.ForeignKey(Beer, related_name='beer_order', on_delete=models.CASCADE)
     quantity = models.IntegerField(blank=False, null=False, default=1)

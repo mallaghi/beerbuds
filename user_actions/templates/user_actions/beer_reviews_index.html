@@ -1,0 +1,17 @@
+{% extends "core/base.html"%}
+{%block title%} Reviews {%endblock%}
+{% block content %}
+
+{% comment %} This back button does not work - needs implementing {% endcomment %}
+{% comment %} <a href="{% url 'marketplace:beer_show' beer.id %}" class="text-sm mb-4"> Back </a> {% endcomment %}
+
+
+{% for review in beer_reviews %}
+  <br></br>
+  {{ review.review_content }}
+  {{ review.rating }}
+  {{ review.profile_id }}
+  {{ review.beer_id }}
+{% endfor %}
+
+{% endblock %}
