@@ -1,4 +1,5 @@
-from django.urls import path
+import re
+from django.urls import path, re_path
 from . import views
 app_name = 'marketplace'
 
@@ -11,5 +12,6 @@ urlpatterns = [
     path('add_to_cart/<int:beer_id>/', views.add_to_cart, name='add_to_cart'),
     path('user_cart/', views.user_cart, name='user_cart'),
     path('store_dashboard/create_beer/', views.create_beer, name="create_beer"),
-    path('profile/', views.profile, name='profile')
+    path('profile/', views.profile, name='profile'),
+    path('store_dashboard/delete_beer/<int:id>', views.delete_beer, name="delete_beer"),
 ]

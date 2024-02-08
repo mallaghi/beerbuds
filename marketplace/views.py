@@ -86,3 +86,16 @@ def user_cart(request):
     user_carts = Cart.objects.filter(profile_id=user_profile).first()
 
     return render(request, 'marketplace/user_cart.html', {'user_cart': user_carts})
+
+
+def store_dash(request):
+   store = Store.objects.filter(user_id=request.user)
+   return render(request, 'marketplace/store_dash.html', {'store': store})
+
+# this is what we can access from store_dash --> store and store info.
+# so below line will not work
+
+def delete_beer(request, id):
+    beer = Beer.objects.get(pk=id)
+    beer.delete()
+    return redirect('/store_dashboard')
