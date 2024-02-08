@@ -73,3 +73,8 @@ class Cart(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+    def calculate_total_price(self):
+        total_price = sum((item.beer_id.price * item.quantity) if item.beer_id else 0 for item in self.cart_items.all())
+        self.total_price = total_price
+        self.save()
