@@ -65,7 +65,7 @@ def add_to_cart(request, beer_id):
             quantity = form.cleaned_data['quantity']
             user_carts = Cart.objects.filter(profile_id=user_profile)
 
-            if user_carts[0]:
+            if user_carts:
                 user_cart = user_carts[0]
             else:
                 user_cart = Cart.objects.create(profile_id=user_profile, total_price=0)
