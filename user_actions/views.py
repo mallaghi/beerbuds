@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from marketplace.models import Profile
 from .models import Review, Beer, Favourite
 from .forms import ReviewForm, FavouriteForm
+from django.db import IntegrityError
 
 def create_review(request, beer_id):
     # Get the user's profile
@@ -44,17 +45,20 @@ def add_favourite(request, beer_id):
     if request.method == 'POST':
         form = FavouriteForm(request.POST)
         if form.is_valid():
-            favourite = form.save(commit=False)
-            favourite.profile_id = profile
-            favourite.beer_id = beer
-            favourite.save()
-
-            redirect_url = reverse('marketplace:beer_show', kwargs={'id': beer_id})
-            return redirect(redirect_url)
+            try:
+                favourite = form.save(commit=False)
+                favourite.profile_id = profile
+                favourite.beer_id = beer
+                favourite.save()
+                redirect_url = reverse('marketplace:beer_show', kwargs={'id': beer_id})
+                return redirect(redirect_url)
+            except IntegrityError:
+                form.add_error(None, "You have already favourited this beer.")
     else:
         form = FavouriteForm()
 
     return render(request, 'user_actions/add_favourite.html', {'form': form, 'beer': beer})
+
 
 
 def favourites_index(request):

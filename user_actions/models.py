@@ -10,6 +10,11 @@ class Favourite(models.Model):
     def __str__(self):
         return self.profile_id.user_id.username + " loves " + self.beer_id.name
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['profile_id', 'beer_id'], name='unique_profile_beer')
+    ]
+
 
 class Review(models.Model):
     profile_id = models.ForeignKey(Profile, related_name='user_review', on_delete=models.CASCADE)
