@@ -26,18 +26,6 @@ def create_review(request, beer_id):
 
     return render(request, 'user_actions/create_review.html', {'form': form, 'beer': beer})
 
-<<<<<<< HEAD
-def delete_review(request, review_id):
-    review = get_object_or_404(Review, id=review_id)
-
-    if request.method == 'POST':
-        review.delete()
-        return redirect('beer_reviews_index')
-
-    return render(request, 'user_actions/beer_reviews_index', {'review': review})
-
-=======
->>>>>>> main
 def reviews_index(request):
     reviews = Review.objects.all()
     return render(request, 'user_actions/reviews_index.html', {'all_reviews': reviews})

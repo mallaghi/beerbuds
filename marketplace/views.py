@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
-from .forms import StoreForm, BeerForm, CartItemForm
-from .models import Beer, Store, User, CartItem, Cart, Profile
+from .forms import StoreForm, BeerForm, CartItemForm, OrderItemForm
+from .models import Beer, Store, User, CartItem, Cart, Profile, OrderItem, Order
 
 # Create your views here.
 
@@ -99,3 +99,28 @@ def delete_beer(request, id):
     beer = Beer.objects.get(pk=id)
     beer.delete()
     return redirect('/store_dashboard')
+
+def add_to_order(request, beer_id):
+    user_profile = get_object_or_404(Profile, user_id=request.user)
+    beer = get_object_or_404(Beer, id=beer_id)
+
+    if request.method == 'POST':
+        form = OrderItemForm(request.POST)
+        if form.is_valid():
+            quantity = form.cleaned_data['quantity']
+            user_carts = Cart.objects.filter(profile_id=user_profile)
+
+            if user_carts[0]:
+                user_cart = user_carts[0]
+            else:
+                user_cart = Cart.objects.create(profile_id=user_profile, total_price=0)
+            cart_item = CartItem.objects.create(beer_id=beer, quantity=quantity)
+
+            cart_item.save()
+            user_cart.cart_items.add(cart_item)
+            user_cart.calculate_total_price()
+            return render(request, 'marketplace/user_cart.html', {'user_cart': user_cart})
+
+    else:
+        form = CartItemForm()
+    return render(request, 'marketplace/add_to_order.html', {'form': form, 'beer': beer})
