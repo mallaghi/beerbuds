@@ -102,25 +102,31 @@ def delete_beer(request, id):
 
 def add_to_order(request, beer_id):
     user_profile = get_object_or_404(Profile, user_id=request.user)
-    beer = get_object_or_404(Beer, id=beer_id)
+    cart = get_object_or_404(Cart, profile_id=user_profile)
 
     if request.method == 'POST':
         form = OrderItemForm(request.POST)
         if form.is_valid():
             quantity = form.cleaned_data['quantity']
-            user_carts = Cart.objects.filter(profile_id=user_profile)
+            user_order = Order.objects.filter(profile_id=user_profile)
 
-            if user_carts[0]:
-                user_cart = user_carts[0]
-            else:
-                user_cart = Cart.objects.create(profile_id=user_profile, total_price=0)
-            cart_item = CartItem.objects.create(beer_id=beer, quantity=quantity)
+            order_item = OrderItem.objects.create(beer_id=beer, quantity=quantity)
+            order_item.save()
 
-            cart_item.save()
-            user_cart.cart_items.add(cart_item)
-            user_cart.calculate_total_price()
-            return render(request, 'marketplace/user_cart.html', {'user_cart': user_cart})
+            for item in cart:
+                beer = item['beer']
+                quantity = int(item['quantity'])
+
+            user_order.calculate_total_price()
+
+            return render(request, 'marketplace/user_order.html', {'user_order': user_order})
 
     else:
-        form = CartItemForm()
+        form = OrderItemForm()
     return render(request, 'marketplace/add_to_order.html', {'form': form, 'beer': beer})
+
+def user_order(request):
+    user_profile = get_object_or_404(Profile, user_id=request.user)
+    user_order = Order.objects.filter(profile_id=user_profile).first()
+
+    return render(request, 'marketplace/user_order.html', {'user_order': user_order})
