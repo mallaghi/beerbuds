@@ -3,8 +3,11 @@
 {% block title %}{{ beer.name }}{% endblock %}
 
 {% block content %}
-  <div class="p-4">
-    <a href="{% url 'marketplace:beer_index' %}" class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-700">  <-- Back to beers </a>
+
+  <div>
+    <div class="p-4 mb-4 absolute left-0">
+      <a href="{% url 'marketplace:beer_index' %}" class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-700">  <-- Back to beers </a>
+    </div>
   </div>
 
   <div class="container-sm flex flex-row justify-between rounded-xl px-10">
@@ -14,17 +17,23 @@
     </div>
 
     <div class="p-4 rounded-xl basis-3/5">
-      <div class="container p-4 border-2 border-blue-500">
-        <h1 class="text-2xl font-bold mb-4">{{ beer.name }}</h1>
-        <a href="{% url 'user_actions:add_favourite' beer.id %}" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-700">Add to Favourites</a>
+      <div class="container p-4 border-2 rounded-xl border-transparent">
+        <div class="flex flex-row justify-between">
+          <h1 class="text-2xl font-bold mb-4">{{ beer.name }}</h1>
+          <a href="{% url 'user_actions:add_favourite' beer.id %}">
+            <button class="fa-regular fa-heart" style="color: #ff0000;"></button>
+          </a>
+          {% comment %} <a href="{% url 'user_actions:add_favourite' beer.id %}" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-700"></a> {% endcomment %}
+        </div>
 
-
-        <p>Alcohol Percentage: {{ beer.abv }}%</p>
-        <p>Price: £{{ beer.price }}</p>
+        <div class="flex flex-row justify-between">
+          <p>Price: £{{ beer.price }}</p>
+          <p>Alcohol Percentage: {{ beer.abv }}%</p>
+        </div>
         <p>Rating: 0/10</p>
         <p>Description: </p>
         <p class="text-sm mb-4">{{ beer.description }}</p>
-          <div>
+          <div class="flex flex-row justify-between">
             <a href="{% url 'user_actions:beer_reviews_index' beer.id %}" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700">See Reviews</a>
             <a href="{% url 'user_actions:create_review' beer.id %}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">Write a Review</a>
           </div>
@@ -42,3 +51,8 @@
     </div>
   </div>
 {% endblock %}
+
+{% comment %} need to add logic to caluclate and display ratings,
+need to add contstraint in the reivew model to limit ratings from 1-10 and remove the review limit from 50 to 10 words,
+need to add logic likely javascript to get the favourite button working and have it not leave the show page when clicked
+need to figure out styling for show page and where to put reviews buttons {% endcomment %}
