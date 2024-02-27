@@ -1,6 +1,6 @@
 from django.db import models
 from marketplace.models import Profile, Beer
-from django.core.validators import MinLengthValidator
+from django.core.validators import MinLengthValidator, MinValueValidator, MaxValueValidator
 
 # Create your models here.
 class Favourite(models.Model):
@@ -19,8 +19,8 @@ class Favourite(models.Model):
 class Review(models.Model):
     profile_id = models.ForeignKey(Profile, related_name='user_review', on_delete=models.CASCADE)
     beer_id = models.ForeignKey(Beer, related_name='beer_review', on_delete=models.CASCADE)
-    review_content = models.TextField(validators=[ MinLengthValidator(50, 'Please enter a description of at least 50 characters')])
-    rating = models.IntegerField(blank=False, null=False)
+    review_content = models.TextField(validators=[ MinLengthValidator(10, 'Please enter a description of at least 10 characters')])
+    rating = models.IntegerField(blank=False, null=False, validators=[ MinValueValidator(1), MaxValueValidator(10)])
 
     def __str__(self):
         return self.profile_id.user_id.username + " reviewed " + self.beer_id.name
