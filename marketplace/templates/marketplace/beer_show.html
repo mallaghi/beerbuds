@@ -10,7 +10,7 @@
     </div>
   </div>
 
-  <div class="container-sm flex flex-row justify-between rounded-xl px-10">
+  <div class="container-sm flex flex-row justify-between rounded-xl px-10 pt-4">
 
     <div class="max-w-xs rounded-xl basis-2/5 flex justify-center">
       <img src="{{ beer.beer_image }}" alt="{{ beer.name }}" class="mt-4 h-auto max-h-80">
@@ -53,6 +53,5 @@
 {% endblock %}
 
 {% comment %} need to add logic to caluclate and display ratings,
-need to add contstraint in the reivew model to limit ratings from 1-10 and remove the review limit from 50 to 10 words,
 need to add logic likely javascript to get the favourite button working and have it not leave the show page when clicked
 need to figure out styling for show page and where to put reviews buttons {% endcomment %}
