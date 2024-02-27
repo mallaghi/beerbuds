@@ -1,0 +1,22 @@
+{% extends "core/base.html"%}
+{% block title%} DELETE? {%endblock%}
+{% block content %}
+
+<h1> TESTING DELETE VIEW</h1>
+
+
+<div class="center">
+	<form method="post" class="card">
+		{% csrf_token %}
+		<h2>Delete Review</h2>
+		<p>Are you sure that you want to delete "{{review}}"?</p>
+		<p class="form-buttons">
+			<input type="submit" class="btn btn-primary" value="Delete">
+			<a href="{% url 'user_actions:beer_reviews_index' review.beer_id.id%}" class="btn btn-outline">Cancel</a>
+		</p>
+	</form>
+</div>
+
+
+{%endblock content%}
+  
