@@ -30,7 +30,12 @@
           <p>Price: £{{ beer.price }}</p>
           <p>Alcohol Percentage: {{ beer.abv }}%</p>
         </div>
-        <p>Rating: 0/10</p>
+        <p>Rating: </p>
+
+        {% comment %} {% for review in beer_reviews %}
+          {{ review.rating }}
+        {% endfor %} {% endcomment %}
+
         <p>Description: </p>
         <p class="text-sm mb-4">{{ beer.description }}</p>
           <div class="flex flex-row justify-between">
