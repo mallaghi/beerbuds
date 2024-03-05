@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from .forms import StoreForm, BeerForm, CartItemForm
 from .models import Beer, Store, User, CartItem, Cart, Profile
+from user_actions.models import Review
 
 # Create your views here.
 
@@ -12,7 +13,10 @@ def beer_index(request):
 
 def beer_show(request, id):
   beer = get_object_or_404(Beer, id=id)
-  return render(request, 'marketplace/beer_show.html', {'beer': beer })
+  reviews = Review.objects.filter(beer_id=id)
+  return render(request, 'marketplace/beer_show.html', {'beer': beer, 'beer_reviews': reviews})
+#   reviews = Review.objects.filter(beer_id=beer_id)
+#   return render(request, 'user_actions/beer_reviews_index.html', {'beer_reviews': reviews})
 
 
 
