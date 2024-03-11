@@ -15,5 +15,6 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     path('store_dashboard/delete_beer/<int:id>', views.delete_beer, name="delete_beer"),
     path('add_to_order/', views.add_to_order, name='add_to_order'),
-    path('user_order/', views.user_order, name='user_order'),
+    path('order_confirmation/', views.order_confirmation, name='order_confirmation'),
+    path('order_history/', views.order_history, name='order_history'),
 ]

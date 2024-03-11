@@ -117,7 +117,7 @@ def add_to_order(request):
 
     if not user_cart or user_cart.cart_items.count() == 0:
         messages.error(request, "Your cart is empty.")
-        return redirect('user_cart')
+        return redirect('order_confirmation')
 
     user_order = Order.objects.create(profile_id=user_profile, total_price=0)
     total_price = 0
@@ -140,22 +140,17 @@ def add_to_order(request):
     user_cart.save()
 
     messages.success(request, "Order created from cart items.")
-    return redirect('marketplace:user_order')
+    return redirect('marketplace:order_confirmation')
 
-def user_order(request):
+def order_confirmation(request):
     user_profile = get_object_or_404(Profile, user_id=request.user)
 
     latest_order = Order.objects.filter(profile_id=user_profile).order_by('-order_date').first()
 
-    return render(request, 'marketplace/user_order.html', {'latest_order': latest_order})
+    return render(request, 'marketplace/order_confirmation.html', {'latest_order': latest_order})
 
-    # if request.method == "POST":
-    #     messages.error(request, "POST requests are not explicitly handled in this example.")
-    #     return redirect('user_order')
+def order_history(request):
+    user_profile = get_object_or_404(Profile, user_id=request.user)
+    orders = Order.objects.filter(profile_id=user_profile).order_by('-order_date')
 
-    # For GET requests, display the orders
-    # orders = Order.objects.filter(profile_id=user_profile).order_by('-order_date')
-    # if not orders.exists():
-    #     messages.info(request, "You have not placed any orders yet.")
-
-    # return render(request, 'marketplace/user_order.html', {'orders': order_items})
+    return render(request, 'marketplace/order_history.html', {'orders': orders})
