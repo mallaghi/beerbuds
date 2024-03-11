@@ -1,0 +1,19 @@
+# Virtualenv
+.pyenv
+venv
+
+# ignore ALL .log files
+*.log
+
+# ignore ALL files in ANY directory named temp
+temp/
+
+*.pyc
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+
+
+.env
