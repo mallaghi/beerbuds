@@ -1,8 +1,21 @@
 {% extends 'core/base.html' %}
 
+
 {% block content %}
-    <h1>Your Order</h1>
-
-    <h2>Add {{ order.order_items }} to Cart</h2>
-
+    <h2>Your Orders</h2>
+    {% if orders %}
+        {% for order in orders %}
+            <div>
+                <h3>Order #{{ order.id }} - Placed on {{ order.order_date }}</h3>
+                <p>Total Price: </p>
+                <ul>
+                    {% for item in order.order_items.all %}
+                        <li>{{ item.beer_id.name }}: {{ item.quantity }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>You have not placed any orders yet.</p>
+    {% endif %}
 {% endblock %}

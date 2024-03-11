@@ -9,8 +9,6 @@
 
 <form method="post" action="{% url 'marketplace:user_order' %}">
   {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Proceed to Checkout</button>
+  <button type="submit">Order</button>
 </form>
-{% comment %} <a href="{% url 'marketplace:user_order' %}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">Proceed to Checkout</a> {% endcomment %}
 {% endblock %}

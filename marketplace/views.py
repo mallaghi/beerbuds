@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from .forms import StoreForm, BeerForm, CartItemForm, OrderItemForm
 from .models import Beer, Store, User, CartItem, Cart, Profile, OrderItem, Order
+from django.db import transaction
 
 # Create your views here.
 
@@ -54,7 +56,7 @@ def create_beer(request):
         form = BeerForm()
     return render(request, 'marketplace/create_beer.html', {'form': form})
 
-
+@login_required
 def add_to_cart(request, beer_id):
     user_profile = get_object_or_404(Profile, user_id=request.user)
     beer = get_object_or_404(Beer, id=beer_id)
@@ -100,33 +102,47 @@ def delete_beer(request, id):
     beer.delete()
     return redirect('/store_dashboard')
 
-def add_to_order(request, beer_id):
+def add_to_order(request):
     user_profile = get_object_or_404(Profile, user_id=request.user)
-    cart = get_object_or_404(Cart, profile_id=user_profile)
+    user_cart = Cart.objects.filter(profile_id=user_profile).first()
 
-    if request.method == 'POST':
-        form = OrderItemForm(request.POST)
-        if form.is_valid():
-            quantity = form.cleaned_data['quantity']
-            user_order = Order.objects.filter(profile_id=user_profile)
+    if not user_cart or user_cart.cart_items.count() == 0:
+        messages.error(request, "Your cart is empty.")
+        return redirect('user_cart')
 
-            order_item = OrderItem.objects.create(beer_id=beer, quantity=quantity)
+    user_order, created = Order.objects.get_or_create(profile_id=user_profile)
+
+    for cart_item in user_cart.cart_items.all():
+        order_item, created = OrderItem.objects.get_or_create(
+            beer_id=cart_item.beer_id,
+            defaults={'quantity': cart_item.quantity}
+        )
+        if not created:
+            order_item.quantity += cart_item.quantity
             order_item.save()
 
-            for item in cart:
-                beer = item['beer']
-                quantity = int(item['quantity'])
+        user_order.order_items.add(order_item)
 
-            user_order.calculate_total_price()
+    user_cart.cart_items.clear()
+    user_cart.save()
 
-            return render(request, 'marketplace/user_order.html', {'user_order': user_order})
-
-    else:
-        form = OrderItemForm()
-    return render(request, 'marketplace/add_to_order.html', {'form': form, 'beer': beer})
+    messages.success(request, "Order created from cart items.")
+    return redirect('marketplace:user_order')
 
 def user_order(request):
     user_profile = get_object_or_404(Profile, user_id=request.user)
-    user_order = Order.objects.filter(profile_id=user_profile).first()
 
-    return render(request, 'marketplace/user_order.html', {'user_order': user_order})
+    latest_order = Order.objects.filter(profile_id=user_profile).order_by('-order_date').first()
+
+    return render(request, 'marketplace/user_order.html', {'latest_order': latest_order})
+
+    # if request.method == "POST":
+    #     messages.error(request, "POST requests are not explicitly handled in this example.")
+    #     return redirect('user_order')
+
+    # For GET requests, display the orders
+    # orders = Order.objects.filter(profile_id=user_profile).order_by('-order_date')
+    # if not orders.exists():
+    #     messages.info(request, "You have not placed any orders yet.")
+
+    # return render(request, 'marketplace/user_order.html', {'orders': order_items})
