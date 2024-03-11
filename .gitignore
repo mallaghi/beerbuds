@@ -15,5 +15,10 @@ __pycache__/
 *.py[cod]
 
 
-
 .env
+
+__pycache__/*
+
+local_settings.py
+db.sqlite3
+db.sqlite3-journal

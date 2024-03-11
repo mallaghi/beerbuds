@@ -5,9 +5,13 @@
 {% block content %}
 
   <div>
-    <h1> HOME </h1>
+    <h1>  HOME
+    </h1>
+  </div>
+  <div class"grid">
+    <a href="{% url 'user_actions:reviews_index' %}" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700">View all our Reviews</a>
+    <a href="{% url 'user_actions:favourites_index' %}" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-700">View all Favourites</a>
+    <a href="{% url 'marketplace:beer_index' %}" class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-700"> View Our beers! </a>
   </div>
 
 {% endblock%}
-
-

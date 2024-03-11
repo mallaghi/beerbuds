@@ -1,6 +1,19 @@
 {% extends "core/base.html"%}
 {%block title%} Reviews {%endblock%}
 {% block content %}
-{{ review.review_content }}
-{{ review.rating }}
+
+{% for review in all_reviews %}
+  <div class="max-w-md mx-auto mt-8 bg-white p-8 rounded-xl border border-black">
+  Beer name: {{ review.beer_id }} -
+  <br></br>
+  Review content: {{ review.review_content }}
+  <br></br>
+  Rating: {{ review.rating }}
+  <br></br>
+  Reviewed by: {{ review.profile_id }}
+  <br></br>
+  </div>
+
+{% endfor %}
+
 {% endblock %}

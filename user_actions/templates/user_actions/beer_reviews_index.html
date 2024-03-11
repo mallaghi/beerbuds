@@ -1,0 +1,21 @@
+{% extends "core/base.html"%}
+{%block title%} Reviews {%endblock%}
+{% block content %}
+
+  {% comment %} This back button does not work - needs implementing {% endcomment %}
+  {% comment %} <a href="{% url 'marketplace:beer_show' beer.id %}" class="text-sm mb-4"> Back </a> {% endcomment %}
+
+  {% for review in beer_reviews %}
+    <br></br>
+    {{ review.review_content }}
+    <li> Rating: {{ review.rating }} </li>
+    <li> Review Author: {{ review.profile_id }} </li>
+    <li> For Beer: {{ review.beer_id }} </li>
+
+    {% if request.user == review.profile_id.user_id %}
+      <div class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-700 max-w-48">
+        <a href="{% url 'user_actions:delete_review' review.beer_id.id review.id%}">Delete review?</a>
+      </div>
+    {% endif %}
+  {% endfor %}
+{% endblock %}

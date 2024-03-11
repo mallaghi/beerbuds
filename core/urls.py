@@ -3,7 +3,7 @@ from django.urls import path, include
 from .forms import LoginForm
 from django.contrib.auth import views as auth_views
 
-app_name = 'core'
+app_name = "core"
 
 urlpatterns = [
     path('signup/', views.signup, name="signup"),

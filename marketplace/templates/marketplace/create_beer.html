@@ -1,0 +1,56 @@
+{% extends "core/base.html"%}
+{%block title%} New Beer {%endblock%}
+{% block content %}
+
+<div class="w-1/2 mx-auto my-6 p-6 bg-gray-100 rounded-xl flex justify-center">
+  <div>
+    <h1> <strong>Create Your Beer </strong> </h1>
+    <form enctype="multipart/form-data" method="post" action="/store_dashboard/create_beer/">
+      {% csrf_token %}
+      <div class='mb-4'>
+        <label class="inline-block mb-2">Beer Name</label><br>
+        {{ form.name }}
+      </div>
+      <div class='mb-3'>
+        <label class="inline-block mb-2">Beer description</label><br>
+        {{ form.description }}
+      </div>
+      <div class='mb-3'>
+        <label class="inline-block mb-2">Beer stock</label><br>
+        {{ form.stock_quantity }}
+      </div>
+      <div class='mb-3'>
+        <label class="inline-block mb-2">Beer price (per unit)</label><br>
+        {{ form.price }}
+      </div>
+      <div class='mb-3'>
+        <label class="inline-block mb-2">Beer image</label><br>
+        {{ form.beer_image }}
+      </div>
+      <div class='mb-3'>
+        <label class="inline-block mb-2">Beer volume</label><br>
+        {{ form.volume }}
+      </div>
+      <div class='mb-3'>
+        <label class="inline-block mb-2">Beer abv</label><br>
+        {{ form.abv }}
+      </div>
+      <div class='mb-3'>
+        <label class="inline-block mb-2">Beer ingredients</label><br>
+        {{ form.ingredients }}
+      </div>
+
+      <button type="submit">Submit</button>
+    </div>
+
+
+    {% if form.errors or form.non_field_errors %}
+    <div>
+      {% for field in form %}
+        {{ field.errors }}
+      {% endfor %}
+      {{ form.non_field_errors }}
+    </div>
+  {% endif %}
+</div>
+{% endblock %}
