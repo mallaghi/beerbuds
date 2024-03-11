@@ -7,8 +7,12 @@
 
 {% endfor %}
 
-<form method="post" action="{% url 'marketplace:add_to_order' %}">
-  {% csrf_token %}
-  <button type="submit">Order</button>
-</form>
+{% if user_cart.cart_items.all %}
+  <form method="post" action="{% url 'marketplace:add_to_order' %}">
+    {% csrf_token %}
+    <button type="submit">Order</button>
+  </form>
+{% else %}
+ <p>Your cart is empty</p>
+{% endif %}
 {% endblock %}
