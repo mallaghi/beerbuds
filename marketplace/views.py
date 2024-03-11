@@ -1,16 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
-<<<<<<< HEAD
-from django.contrib.auth.decorators import login_required
-from .forms import StoreForm, BeerForm, CartItemForm, OrderItemForm
-from .models import Beer, Store, User, CartItem, Cart, Profile, OrderItem, Order
-from django.db import transaction
-=======
 from .forms import StoreForm, BeerForm, CartItemForm
-from .models import Beer, Store, User, CartItem, Cart, Profile
+from .models import Beer, Store, User, CartItem, Cart, Profile, Order, OrderItem
 from user_actions.models import Review
->>>>>>> main
+from django.contrib.auth.decorators import login_required
 
 
 def beer_index(request):
