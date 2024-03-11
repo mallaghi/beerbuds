@@ -3,6 +3,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from marketplace.models import Profile
 from .models import Review, Beer, Favourite
 from .forms import ReviewForm, FavouriteForm
+from django.db import IntegrityError
+from django.urls import reverse_lazy
+from django.views.generic.edit import DeleteView
+from django.contrib import messages
+
 
 def create_review(request, beer_id):
     # Get the user's profile
@@ -44,18 +49,19 @@ def add_favourite(request, beer_id):
     if request.method == 'POST':
         form = FavouriteForm(request.POST)
         if form.is_valid():
-            favourite = form.save(commit=False)
-            favourite.profile_id = profile
-            favourite.beer_id = beer
-            favourite.save()
-
-            redirect_url = reverse('marketplace:beer_show', kwargs={'id': beer_id})
-            return redirect(redirect_url)
+            try:
+                favourite = form.save(commit=False)
+                favourite.profile_id = profile
+                favourite.beer_id = beer
+                favourite.save()
+                redirect_url = reverse('marketplace:beer_show', kwargs={'id': beer_id})
+                return redirect(redirect_url)
+            except IntegrityError:
+                form.add_error(None, "You have already favourited this beer.")
     else:
         form = FavouriteForm()
 
     return render(request, 'user_actions/add_favourite.html', {'form': form, 'beer': beer})
-
 
 def favourites_index(request):
     favourites = Favourite.objects.all()
@@ -64,3 +70,14 @@ def favourites_index(request):
 def beer_favourites_index(request,beer_id):
     favourites = Favourite.objects.filter(beer_id=beer_id)
     return render(request, 'user_actions/beer_favourites_index.html', {'beer_favourites': favourites})
+
+class ReviewDelete(DeleteView):
+    model = Review
+    # get the url to redirect to the beer_reviews_index page
+    def get_success_url(self):
+        beer_id = self.kwargs['beer_id']
+        return reverse_lazy('user_actions:beer_reviews_index', kwargs={'beer_id': beer_id})
+
+    def form_valid(self, form):
+        messages.success(self.request, "The review was deleted successfully.")
+        return super(ReviewDelete,self).form_valid(form)

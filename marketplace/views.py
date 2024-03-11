@@ -1,20 +1,29 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
+<<<<<<< HEAD
 from django.contrib.auth.decorators import login_required
 from .forms import StoreForm, BeerForm, CartItemForm, OrderItemForm
 from .models import Beer, Store, User, CartItem, Cart, Profile, OrderItem, Order
 from django.db import transaction
+=======
+from .forms import StoreForm, BeerForm, CartItemForm
+from .models import Beer, Store, User, CartItem, Cart, Profile
+from user_actions.models import Review
+>>>>>>> main
 
-# Create your views here.
 
 def beer_index(request):
   beers = Beer.objects.all()
   return render(request,'marketplace/beer_index.html', {'beers': beers })
 
 def beer_show(request, id):
+  form = CartItemForm()
   beer = get_object_or_404(Beer, id=id)
-  return render(request, 'marketplace/beer_show.html', {'beer': beer })
+  reviews = Review.objects.filter(beer_id=id)
+  return render(request, 'marketplace/beer_show.html', {'beer': beer, 'beer_reviews': reviews, 'form': form})
+#   reviews = Review.objects.filter(beer_id=beer_id)
+#   return render(request, 'user_actions/beer_reviews_index.html', {'beer_reviews': reviews})
 
 
 
@@ -63,9 +72,11 @@ def add_to_cart(request, beer_id):
 
     if request.method == 'POST':
         form = CartItemForm(request.POST)
+
         if form.is_valid():
             quantity = form.cleaned_data['quantity']
             user_carts = Cart.objects.filter(profile_id=user_profile)
+
 
             if user_carts:
                 user_cart = user_carts[0]
@@ -76,11 +87,15 @@ def add_to_cart(request, beer_id):
             cart_item.save()
             user_cart.cart_items.add(cart_item)
             user_cart.calculate_total_price()
-            return render(request, 'marketplace/user_cart.html', {'user_cart': user_cart})
+            user_cart.save()
+            alert = f"{cart_item.quantity} {beer.name} added to cart"
+            messages.success(request, alert)
+
+        return redirect('marketplace:beer_show', id=beer_id)
 
     else:
         form = CartItemForm()
-    return render(request, 'marketplace/add_to_cart.html', {'form': form, 'beer': beer})
+    return render(request, 'marketplace/beer_show.html', {'form': form, 'beer': beer})
 
 
 def user_cart(request):

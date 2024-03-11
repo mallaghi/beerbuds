@@ -1,9 +1,23 @@
-*.log
-*.pot
-*.pyc
+
 __pycache__/*
-__pycache__/
-_pycache_/*
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
+.pyenv
+venv
+
+# ignore ALL .log files
+*.log
+
+# ignore ALL files in ANY directory named temp
+temp/
+
+*.pyc
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+
+
+.env
