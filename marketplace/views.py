@@ -119,18 +119,22 @@ def add_to_order(request):
         messages.error(request, "Your cart is empty.")
         return redirect('user_cart')
 
-    user_order, created = Order.objects.get_or_create(profile_id=user_profile)
+    user_order = Order.objects.create(profile_id=user_profile, total_price=0)
+    total_price = 0
 
+    # Looping through cart items to create order items and add them to the order
     for cart_item in user_cart.cart_items.all():
         order_item, created = OrderItem.objects.get_or_create(
             beer_id=cart_item.beer_id,
-            defaults={'quantity': cart_item.quantity}
+            defaults={'quantity': cart_item.quantity},
         )
-        if not created:
-            order_item.quantity += cart_item.quantity
-            order_item.save()
+        user_order.order_items.add(order_item)  # Add the OrderItem to the Order
+        total_price += cart_item.beer_id.price * cart_item.quantity
 
-        user_order.order_items.add(order_item)
+
+    # Update the total price of the order after adding all items
+    user_order.total_price = total_price
+    user_order.save()
 
     user_cart.cart_items.clear()
     user_cart.save()

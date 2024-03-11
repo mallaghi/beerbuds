@@ -1,21 +1,26 @@
 {% extends 'core/base.html' %}
 
 
+{% block title %}Latest Order{% endblock %}
+
 {% block content %}
-    <h2>Your Orders</h2>
-    {% if orders %}
-        {% for order in orders %}
-            <div>
-                <h3>Order #{{ order.id }} - Placed on {{ order.order_date }}</h3>
-                <p>Total Price: </p>
-                <ul>
-                    {% for item in order.order_items.all %}
-                        <li>{{ item.beer_id.name }}: {{ item.quantity }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
-        {% endfor %}
+    <h1>Your Latest Order</h1>
+
+    {% if latest_order %}
+        <div>
+            <h2>Order Details</h2>
+            <p>Order ID: {{ latest_order.id }}</p>
+            <p>Order Date: {{ latest_order.order_date }}</p>
+            <p>Total Price: {{ latest_order.total_price }}</p>
+
+            <h3>Items:</h3>
+            <ul>
+                {% for item in latest_order.order_items.all %}
+                    <li>{{ item.beer_id.name }} - Quantity: {{ item.quantity }}</li>
+                {% endfor %}
+            </ul>
+        </div>
     {% else %}
-        <p>You have not placed any orders yet.</p>
+        <p>You do not have any orders yet.</p>
     {% endif %}
 {% endblock %}

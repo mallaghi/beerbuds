@@ -14,6 +14,6 @@ urlpatterns = [
     path('store_dashboard/create_beer/', views.create_beer, name="create_beer"),
     path('profile/', views.profile, name='profile'),
     path('store_dashboard/delete_beer/<int:id>', views.delete_beer, name="delete_beer"),
-    path('add_to_order/<int:beer_id>/', views.add_to_order, name='add_to_order'),
+    path('add_to_order/', views.add_to_order, name='add_to_order'),
     path('user_order/', views.user_order, name='user_order'),
 ]

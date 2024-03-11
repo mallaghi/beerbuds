@@ -7,7 +7,7 @@
 
 {% endfor %}
 
-<form method="post" action="{% url 'marketplace:user_order' %}">
+<form method="post" action="{% url 'marketplace:add_to_order' %}">
   {% csrf_token %}
   <button type="submit">Order</button>
 </form>
