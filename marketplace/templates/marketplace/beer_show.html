@@ -5,6 +5,15 @@
 {% block content %}
 
   <div>
+    {% if messages %}
+    <ul class="messages bg-green-200 p-4 rounded">
+      {% for message in messages %}
+        <li class="mb-2   px-4 py-2 border rounded {% if message.tags %}{{ message.tags }}{% endif %}">
+          {{ message }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
     <div class="p-4 mb-4 absolute left-0">
       <a href="{% url 'marketplace:beer_index' %}" class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-700">  <-- Back to beers </a>
     </div>
@@ -42,16 +51,21 @@
             <a href="{% url 'user_actions:beer_reviews_index' beer.id %}" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700">See Reviews</a>
             <a href="{% url 'user_actions:create_review' beer.id %}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">Write a Review</a>
           </div>
-        <div class="mt-6">
-          {% comment %} <a href="{% url 'user_actions:create_review' beer.id %}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">Write a Review</a> {% endcomment %}
+          <div class="mt-6">
+            <form method="post" action="{% url 'marketplace:add_to_cart' beer.id %}">
+              {% csrf_token %}
+              <div class="flex items-center space-x-4">
+                <label for="quantity" class="text-sm">Quantity:</label>
+                {{ form.quantity }}
 
-          {% comment %} <a href="{% url 'user_actions:beer_reviews_index' beer.id %}" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700">See Reviews</a> {% endcomment %}
+                </select>
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue">
+                  Add to Cart
+                </button>
+              </div>
+            </form>
 
-          {% comment %} <a href="{% url 'user_actions:add_favourite' beer.id %}" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-700">Add to Favourites</a> {% endcomment %}
-
-          <a href="{% url 'user_actions:beer_favourites_index' beer.id %}" class="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-700">See Favourites</a>
-
-        </div>
+        <a href="{% url 'marketplace:add_to_cart' beer.id %}" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-orange-700">Add to Cart</a>
       </div>
     </div>
   </div>

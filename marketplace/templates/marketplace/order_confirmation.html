@@ -1,0 +1,23 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+    <h1>Order Confirmed</h1>
+    {% if latest_order %}
+        <div>
+            <h2>Order Details</h2>
+            <p>Order ID: {{ latest_order.id }}</p>
+            <p>Order Date: {{ latest_order.order_date }}</p>
+            <p>Total Price: {{ latest_order.total_price }}</p>
+
+            <h3>Items:</h3>
+            <ul>
+                {% for item in latest_order.order_items.all %}
+                    <li>{{ item.beer_id.name }} - Quantity: {{ item.quantity }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% else %}
+        <p>You do not have any orders yet.</p>
+    {% endif %}
+    <h1><a href="{% url 'marketplace:order_history' %}" class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-700">  Order history </a></h1>
+{% endblock %}

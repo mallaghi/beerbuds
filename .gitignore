@@ -1,29 +1,43 @@
-*.log
-*.pot
-*.pyc
+
 __pycache__/*
-__pycache__/
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 30d624a5900a47a3bce2ea4b9b3ae7307e70722b
 .pyenv
 venv
 
 # ignore ALL .log files
+<<<<<<< HEAD
 # *.log
+=======
+*.log
+>>>>>>> 30d624a5900a47a3bce2ea4b9b3ae7307e70722b
 
 # ignore ALL files in ANY directory named temp
 temp/
 
+<<<<<<< HEAD
 # *.pyc
 
 # Byte-compiled / optimized / DLL files
+=======
+*.pyc
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+>>>>>>> 30d624a5900a47a3bce2ea4b9b3ae7307e70722b
 *.py[cod]
 
 
 
 .env
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 30d624a5900a47a3bce2ea4b9b3ae7307e70722b
