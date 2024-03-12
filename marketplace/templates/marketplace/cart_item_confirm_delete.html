@@ -1,0 +1,13 @@
+<div class="container center">
+
+	<form method="POST" class="card">
+		{% csrf_token %}
+		<h2>Delete Cart Item</h2>
+		<p>Are you sure that you want to delete {{cart_item}}?</p>
+		<p class="form-buttons">
+			<input type="submit" class="btn btn-primary" value="Delete">
+			<a href="{% url 'marketplace:marketplace:delete_cart_item' cart_item.id %}" class="btn btn-outline">Cancel</a>
+		</p>
+	</form>
+
+</div>

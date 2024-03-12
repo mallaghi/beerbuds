@@ -98,13 +98,17 @@ def user_cart(request):
 
     return render(request, 'marketplace/user_cart.html', {'user_cart': user_carts})
 
+def delete_cart_item(request, id):
+    cart_item = get_object_or_404(CartItem, pk = id)
+    if request.method == 'POST':
+        cart_item.delete()
+        alert = f"{cart_item} successfully deleted from your cart"
+        messages.success(request, alert)
+    return redirect("/user_cart")
 
 def store_dash(request):
    store = Store.objects.filter(user_id=request.user)
    return render(request, 'marketplace/store_dash.html', {'store': store})
-
-# this is what we can access from store_dash --> store and store info.
-# so below line will not work
 
 def delete_beer(request, id):
     beer = Beer.objects.get(pk=id)
