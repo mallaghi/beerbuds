@@ -41,7 +41,7 @@
         <a href="#" class="search">
           <i class="fas fa-magnifying-glass"></i>
         </a>
-        <a href ="#" class="cart">
+        <a href ="{% url 'marketplace:user_cart' %}" class="cart">
           <i class="fas fa-cart-shopping"></i>
         </a>
         {% if user.is_authenticated %}

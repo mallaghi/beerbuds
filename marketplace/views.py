@@ -2,8 +2,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from .forms import StoreForm, BeerForm, CartItemForm
-from .models import Beer, Store, User, CartItem, Cart, Profile
+from .models import Beer, Store, User, CartItem, Cart, Profile, Order, OrderItem
 from user_actions.models import Review
+from django.contrib.auth.decorators import login_required
 
 
 def beer_index(request):
@@ -58,7 +59,7 @@ def create_beer(request):
         form = BeerForm()
     return render(request, 'marketplace/create_beer.html', {'form': form})
 
-
+@login_required
 def add_to_cart(request, beer_id):
     user_profile = get_object_or_404(Profile, user_id=request.user)
     beer = get_object_or_404(Beer, id=beer_id)
@@ -109,3 +110,47 @@ def delete_beer(request, id):
     beer = Beer.objects.get(pk=id)
     beer.delete()
     return redirect('/store_dashboard')
+
+def add_to_order(request):
+    user_profile = get_object_or_404(Profile, user_id=request.user)
+    user_cart = Cart.objects.filter(profile_id=user_profile).first()
+
+    if not user_cart or user_cart.cart_items.count() == 0:
+        messages.error(request, "Your cart is empty.")
+        return redirect('order_confirmation')
+
+    user_order = Order.objects.create(profile_id=user_profile, total_price=0)
+    total_price = 0
+
+    # Looping through cart items to create order items and add them to the order
+    for cart_item in user_cart.cart_items.all():
+        order_item, created = OrderItem.objects.get_or_create(
+            beer_id=cart_item.beer_id,
+            defaults={'quantity': cart_item.quantity},
+        )
+        user_order.order_items.add(order_item)  # Add the OrderItem to the Order
+        total_price += cart_item.beer_id.price * cart_item.quantity
+
+
+    # Update the total price of the order after adding all items
+    user_order.total_price = total_price
+    user_order.save()
+
+    user_cart.cart_items.clear()
+    user_cart.save()
+
+    messages.success(request, "Order created from cart items.")
+    return redirect('marketplace:order_confirmation')
+
+def order_confirmation(request):
+    user_profile = get_object_or_404(Profile, user_id=request.user)
+
+    latest_order = Order.objects.filter(profile_id=user_profile).order_by('-order_date').first()
+
+    return render(request, 'marketplace/order_confirmation.html', {'latest_order': latest_order})
+
+def order_history(request):
+    user_profile = get_object_or_404(Profile, user_id=request.user)
+    orders = Order.objects.filter(profile_id=user_profile).order_by('-order_date')
+
+    return render(request, 'marketplace/order_history.html', {'orders': orders})

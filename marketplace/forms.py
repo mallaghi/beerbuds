@@ -1,5 +1,5 @@
 from django import forms
-from .models import Store, Beer, CartItem, Cart
+from .models import Store, Beer, CartItem, Cart, OrderItem, Order
 
 class StoreForm(forms.ModelForm):
     class Meta:
@@ -27,3 +27,12 @@ class BeerForm(forms.ModelForm):
         fields = ['name', 'description', 'stock_quantity', 'price',
                    'beer_image', 'volume', 'abv', 'ingredients']
         exclude = ('store_id',)
+
+class OrderItemForm(forms.ModelForm):
+    class Meta:
+        model = OrderItem
+        fields = ['quantity']
+        exclude = ('beer_id','profile_id')
+        widgets = {
+            'quantity': forms.Select(choices=[(i, str(i)) for i in range(1, 30)]),  # 30 to be changed to the beer stock quantity later
+        }
