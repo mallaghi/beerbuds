@@ -2,17 +2,40 @@
 {%block title%} YOUR CART {% endblock %}
 {% block content %}
 
-{% for cart_item in user_cart.cart_items.all %}
-  <a href="{% url 'marketplace:beer_show' cart_item.beer_id.id %}"> <p>  {{cart_item.beer_id}} - Amount : {{cart_item.quantity}} </p>  </a>
+<div class="container">
 
-{% endfor %}
+  {% if messages %}
+  <ul class="messages bg-green-200 p-4 rounded">
+    {% for message in messages %}
+      <li class="mb-2 px-4 py-2 border rounded {% if message.tags %}{{ message.tags }}{% endif %}">
+        {{ message }}
+      </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
 
-{% if user_cart.cart_items.all %}
-  <form method="post" action="{% url 'marketplace:add_to_order' %}">
-    {% csrf_token %}
-    <button type="submit">Order</button>
-  </form>
-{% else %}
- <p>Your cart is empty</p>
-{% endif %}
-{% endblock %}
+  <h2> <strong> Your Shopping Cart </strong> </h2>
+  {% for cart_item in user_cart.cart_items.all %}
+
+    <a href="{% url 'marketplace:beer_show' cart_item.beer_id.id %}">
+      <h5>  {{cart_item.beer_id}}  x{{cart_item.quantity}} </h5>
+    </a>
+
+    <form action="{% url 'marketplace:delete_cart_item' cart_item.id %}" method="post">
+      {% csrf_token%}
+      <input type="submit" value="Delete Item" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 focus:outline-none focus:shadow-outline-red">
+    </form>
+
+  {% endfor %}
+
+  {% if user_cart.cart_items.all %}
+    <form method="post" action="{% url 'marketplace:add_to_order' %}">
+      {% csrf_token %}
+      <button type="submit" class="bg-green-500 text-white px-4 py-2 mt-2 rounded hover:bg-green-600 focus:outline-none focus:shadow-outline-green">Order</button>
+    </form>
+  {% else %}
+  <p>Your cart is empty</p>
+  {% endif %}
+</div>
+
+  {% endblock %}
