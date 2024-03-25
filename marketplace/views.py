@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from .forms import StoreForm, BeerForm, CartItemForm
+from user_actions.forms import FavouriteForm
 from .models import Beer, Store, User, CartItem, Cart, Profile, Order, OrderItem
 from user_actions.models import Review
 from django.contrib.auth.decorators import login_required
@@ -15,7 +16,8 @@ def beer_show(request, id):
   form = CartItemForm()
   beer = get_object_or_404(Beer, id=id)
   reviews = Review.objects.filter(beer_id=id)
-  return render(request, 'marketplace/beer_show.html', {'beer': beer, 'beer_reviews': reviews, 'form': form})
+  favourites_form = FavouriteForm()
+  return render(request, 'marketplace/beer_show.html', {'beer': beer, 'beer_reviews': reviews, 'form': form, 'favourites_form': favourites_form})
 #   reviews = Review.objects.filter(beer_id=beer_id)
 #   return render(request, 'user_actions/beer_reviews_index.html', {'beer_reviews': reviews})
 

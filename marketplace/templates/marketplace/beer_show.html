@@ -29,11 +29,20 @@
       <div class="container p-4 border-2 rounded-xl border-transparent">
         <div class="flex flex-row justify-between">
           <h1 class="text-2xl font-bold mb-4">{{ beer.name }}</h1>
-          <a href="{% url 'user_actions:add_favourite' beer.id %}">
+          {% comment %} <a href="{% url 'user_actions:add_favourite' beer.id %}">
             <button class="fa-regular fa-heart" style="color: #ff0000;"></button>
-          </a>
-          {% comment %} <a href="{% url 'user_actions:add_favourite' beer.id %}" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-700"></a> {% endcomment %}
-        </div>
+          </a> {% endcomment %}
+          <div class="mt-6">
+            <form method="post" action="{% url 'user_actions:add_favourite' beer.id %}">
+              {% csrf_token %}
+                {% comment %} <button type="submit" class="fa-regular fa-heart" style="color: #ff0000;"></button> {% endcomment %}
+                <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 focus:outline-none focus:shadow-outline-red">
+                  Add to Favorites
+                </button>
+            </form>
+          </div>
+      </div>
+      <div>
 
         <div class="flex flex-row justify-between">
           <p>Price: £{{ beer.price }}</p>
@@ -65,7 +74,8 @@
               </div>
             </form>
 
-        <a href="{% url 'marketplace:add_to_cart' beer.id %}" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-orange-700">Add to Cart</a>
+
+            <a href="{% url 'user_actions:beer_favourites_index' beer.id %}" class="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-700">See Favourites</a>
       </div>
     </div>
   </div>

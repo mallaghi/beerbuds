@@ -47,21 +47,23 @@ def add_favourite(request, beer_id):
     beer = get_object_or_404(Beer, id=beer_id)
 
     if request.method == 'POST':
-        form = FavouriteForm(request.POST)
-        if form.is_valid():
+        favourites_form = FavouriteForm(request.POST)
+        if favourites_form.is_valid():
             try:
-                favourite = form.save(commit=False)
+                favourite = favourites_form.save(commit=False)
                 favourite.profile_id = profile
                 favourite.beer_id = beer
                 favourite.save()
-                redirect_url = reverse('marketplace:beer_show', kwargs={'id': beer_id})
-                return redirect(redirect_url)
-            except IntegrityError:
-                form.add_error(None, "You have already favourited this beer.")
-    else:
-        form = FavouriteForm()
+                return render(request, 'marketplace/beer_show.html', {'favourites_form': favourites_form, 'beer': beer})
 
-    return render(request, 'user_actions/add_favourite.html', {'form': form, 'beer': beer})
+                # redirect_url = reverse('marketplace:beer_show', kwargs={'id': beer_id})
+                # return redirect(redirect_url)
+            except IntegrityError:
+                favourites_form.add_error(None, "You have already favourited this beer.")
+    else:
+        favourites_form = FavouriteForm()
+
+    return render(request, 'marketplace/beer_show.html', {'favourites_form': favourites_form, 'beer': beer})
 
 def favourites_index(request):
     favourites = Favourite.objects.all()
