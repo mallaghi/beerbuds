@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% load static %}
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="{% static 'core/styles.css' %}">
+  {% comment %} Using FontAwesome============================================= {% endcomment %}
+  <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
+  <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
+  {% comment %} Import Poppins Font Family ====================================={% endcomment %}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <title> {% block title%} {% endblock %} | BeerBuds 🍻  </title>
+</head>
+
+<body>
+    {% comment %} Navigation bar============================== {% endcomment %}
+    <nav class= "navigation">
+      <a href="{% url 'core:home' %}" class="logo">Beerbuds</a>
+    {% comment %} menu-btn ================================ {% endcomment %}
+      <input type="checkbox" class="menu-btn" id="menu-btn">
+      <label for="menu-btn" class="menu-icon">
+        <span class="nav-icon">
+          <i class="fas fa-bars"></i>
+        </span>
+      </label>
+      <ul class="menu">
+        <li><a href="{% url 'core:home' %}">HOME</a></li>
+        {% if has_store %}
+            <li><a href="{% url 'marketplace:store_dash' %}">VISIT YOUR STORE</a></li>
+        {% else %}
+            <li><a href="{% url 'marketplace:create_store' %}">CREATE A STORE</a></li>
+        {% endif %}
+        <li><a href="#">US</a></li>
+      </ul>
+    {% comment %} Right Elements================================= {% endcomment %}
+      <div class="right-elements">
+        <a href="#" class="search">
+          <i class="fas fa-magnifying-glass"></i>
+        </a>
+        <a href ="{% url 'marketplace:user_cart' %}" class="cart">
+          <i class="fas fa-cart-shopping"></i>
+        </a>
+        {% if user.is_authenticated %}
+            <a href ="{% url 'marketplace:profile' %}" class="user">
+              <i class="fas fa-user"></i>
+            </a>
+        {% else %}
+            <a href="{% url 'core:signup' %}">Sign up</a>
+            <a href="{% url 'core:login' %}">Login</a>
+        {% endif %}
+      </div>
+    </nav>
+    {% comment %} Navigation End================================ {% endcomment %}
+    <div class="content">
+      {% block content %} {% endblock %}
+    </div>
+
+    <footer>
+      <div class="footer-container">
+        {% comment %} logo container ================================ {% endcomment %}
+        <div class="footer-logo-container">
+          <div class="footer-logo">Beerbuds</div>
+          <span>Stay Connected</span>
+          <div class="footer-social">
+            <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+          </div>
+        </div>
+         {% comment %} footer menu =============================================   {% endcomment %}
+        <div class="footer-menu">
+          <div class="footer-menu-box">
+            <strong>Legal</strong>
+            <ul>
+              <li><a href="#">Drink responsibly</a></li>
+              <li><a href="#">Copyright</a></li>
+              <li><a href="#">Terms of Use</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Data policy</a></li>
+            </ul>
+          </div>
+          <div class="footer-menu-box">
+            <strong>About</strong>
+            <ul>
+              <li><a href="#">Drink responsibly</a></li>
+              <li><a href="#">Copyright</a></li>
+              <li><a href="#">Terms of Use</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Data policy</a></li>
+            </ul>
+          </div>
+          <div class="footer-menu-box">
+            <strong>Contact</strong>
+            <ul>
+              <li>contact@brewbuds.com</li>
+              <li>12345678910</li>
+              <li>Shoredich Stables</li>
+              <li>138 Kingsland Rd</li>
+              <li>London, E2 8DY</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <span class="copyright">Copyright 2024 - BeerBuds</span>
+</body>
+</html>

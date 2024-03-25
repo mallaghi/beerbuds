@@ -1,0 +1,87 @@
+{% extends "core/base.html" %}
+
+
+{% block title %}{{ beer.name }}{% endblock %}
+
+{% block content %}
+
+  <div>
+    {% if messages %}
+    <ul class="messages bg-green-200 p-4 rounded">
+      {% for message in messages %}
+        <li class="mb-2   px-4 py-2 border rounded {% if message.tags %}{{ message.tags }}{% endif %}">
+          {{ message }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+    <div class="p-4 mb-4 absolute left-0">
+      <a href="{% url 'marketplace:beer_index' %}" class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-700">  <-- Back to beers </a>
+    </div>
+  </div>
+
+  <div class="container-sm flex flex-row justify-between rounded-xl px-10 pt-4">
+
+    <div class="max-w-xs rounded-xl basis-2/5 flex justify-center">
+      <img src="{{ beer.beer_image }}" alt="{{ beer.name }}" class="mt-4 h-auto max-h-80">
+    </div>
+
+    <div class="p-4 rounded-xl basis-3/5">
+      <div class="container p-4 border-2 rounded-xl border-transparent">
+        <div class="flex flex-row justify-between">
+          <h1 class="text-2xl font-bold mb-4">{{ beer.name }}</h1>
+          <a href="{% url 'user_actions:add_favourite' beer.id %}">
+            <button class="fa-regular fa-heart" style="color: #ff0000;"></button>
+          </a>
+          {% comment %} <a href="{% url 'user_actions:add_favourite' beer.id %}" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-700"></a> {% endcomment %}
+        </div>
+
+        <div class="flex flex-row justify-between">
+          <p>Price: £{{ beer.price }}</p>
+          <p>Alcohol Percentage: {{ beer.abv }}%</p>
+        </div>
+        <p>Rating: </p>
+
+        {% comment %} {% for review in beer_reviews %}
+          {{ review.rating }}
+        {% endfor %} {% endcomment %}
+
+        <p>Description: </p>
+        <p class="text-sm mb-4">{{ beer.description }}</p>
+          <div class="flex flex-row justify-between">
+            <a href="{% url 'user_actions:beer_reviews_index' beer.id %}" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700">See Reviews</a>
+            <a href="{% url 'user_actions:create_review' beer.id %}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">Write a Review</a>
+          </div>
+          <div class="mt-6">
+            {% if beer_in_cart %}
+              <form method="post">
+                {% csrf_token %}
+                <div class="flex items-center space-x-4">
+                  <label for="quantity" class="text-sm">Update Quantity:</label>
+                  {{ form.quantity }}
+                  <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue">
+                    Update Cart
+                  </button>
+                </div>
+              </form>
+            {% else %}
+              <form method="post" action="{% url 'marketplace:add_to_cart' beer.id %}">
+                {% csrf_token %}
+                <div class="flex items-center space-x-4">
+                  <label for="quantity" class="text-sm">Quantity:</label>
+                  {{ form.quantity }}
+                  <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue">
+                    Add to Cart
+                  </button>
+                </div>
+              </form>
+            {% endif %}
+          </div>
+    </div>
+  </div>
+  <script src="{% static 'index.js' %}"></script>
+{% endblock %}
+
+{% comment %} need to add logic to caluclate and display ratings,
+need to add logic likely javascript to get the favourite button working and have it not leave the show page when clicked
+need to figure out styling for show page and where to put reviews buttons {% endcomment %}

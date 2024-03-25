@@ -1,0 +1,15 @@
+{% extends "core/base.html"%}
+{%block title%} Favourites {%endblock%}
+{% block content %}
+
+{% for favourites in all_favourites %}
+  <div class="max-w-md mx-auto mt-8 bg-white p-8 rounded-xl border border-black">
+  Favourited beer name: {{ favourites.beer_id }} -
+  <br></br>
+  Favourited by: {{ favourites.profile_id }}
+  <br></br>
+  </div>
+
+{% endfor %}
+
+{% endblock %}
