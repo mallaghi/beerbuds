@@ -30,8 +30,8 @@ class Profile(models.Model):
 
 class Beer(models.Model):
     name = models.CharField(max_length=255, blank=False, null=False)
-    description = models.TextField(blank=False, validators=[ MinLengthValidator(50, 'Please enter a description of at least 50 characters')])
-    stock_quantity = models.IntegerField(blank=False, null=False)
+    description = models.TextField(blank=False, validators=[ MinLengthValidator(5, 'Please enter a description of at least 50 characters')])
+    stock_quantity = models.IntegerField(blank=False, null=False, default=100)
     price = models.DecimalField(blank=False, null=False, max_digits=6, decimal_places=2)
     store_id = models.ForeignKey(Store, related_name='beer_store', on_delete=models.CASCADE)
     beer_image = models.ImageField(upload_to='beer_images', blank=False, null=False)
@@ -41,7 +41,6 @@ class Beer(models.Model):
 
     def __str__(self):
         return self.name
-
 class OrderItem(models.Model):
     beer_id = models.ForeignKey(Beer, related_name='beer_order', on_delete=models.CASCADE)
     quantity = models.IntegerField(blank=False, null=False, default=1)
