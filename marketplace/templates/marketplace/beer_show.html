@@ -1,5 +1,9 @@
 {% extends "core/base.html" %}
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> e54aa33bc5cb2f8d2f7e340a5357fd3e5154f25e
 {% block title %}{{ beer.name }}{% endblock %}
 
 {% block content %}
@@ -52,6 +56,35 @@
             <a href="{% url 'user_actions:create_review' beer.id %}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">Write a Review</a>
           </div>
           <div class="mt-6">
+<<<<<<< HEAD
+            {% if beer_in_cart %}
+              <form method="post">
+                {% csrf_token %}
+                <div class="flex items-center space-x-4">
+                  <label for="quantity" class="text-sm">Update Quantity:</label>
+                  {{ form.quantity }}
+                  <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue">
+                    Update Cart
+                  </button>
+                </div>
+              </form>
+            {% else %}
+              <form method="post" action="{% url 'marketplace:add_to_cart' beer.id %}">
+                {% csrf_token %}
+                <div class="flex items-center space-x-4">
+                  <label for="quantity" class="text-sm">Quantity:</label>
+                  {{ form.quantity }}
+                  <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue">
+                    Add to Cart
+                  </button>
+                </div>
+              </form>
+            {% endif %}
+          </div>
+    </div>
+  </div>
+
+=======
             <form method="post" action="{% url 'marketplace:add_to_cart' beer.id %}">
               {% csrf_token %}
               <div class="flex items-center space-x-4">
@@ -69,6 +102,7 @@
       </div>
     </div>
   </div>
+>>>>>>> e54aa33bc5cb2f8d2f7e340a5357fd3e5154f25e
 {% endblock %}
 
 {% comment %} need to add logic to caluclate and display ratings,

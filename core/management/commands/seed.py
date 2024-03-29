@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from marketplace.models import Beer, Store
+from marketplace.models import Beer, Store, Profile
 from django.contrib.auth.models import User
 import random
 from faker import Faker
@@ -30,9 +30,11 @@ class Command(BaseCommand):
 
 def clear_data():
     """Deletes all users that are not superusers"""
+    print("Clearing data")
     User.objects.filter(is_superuser=False).delete()
 
 def create_users():
+    print("Creating users")
     user = User.objects.create(
         first_name=fake.first_name_nonbinary(),
         last_name=fake.last_name(),
@@ -42,7 +44,18 @@ def create_users():
         )
     return user
 
+
+def create_profile():
+    print("Creating profiles")
+    user_id = User.objects.exclude(user_profile__isnull=False)
+    profile = Profile.objects.create(
+        user_id=random.choice(user_id),
+        address=fake.address()
+    )
+    return profile
+
 def create_stores():
+    print("Creating stores")
     store_names = [
         "Brew Haven",
         "Hop Junction",
@@ -107,33 +120,39 @@ def create_stores():
     return store
 
 def get_random_beer_from_api():
-    punk_api_url = "https://api.punkapi.com/v2/beers/random"
+    print("Getting random beer from API")
+    punk_api_url = "https://api.sampleapis.com/beers/ale"
     response = requests.get(punk_api_url)
 
     if response.status_code == 200:
-        beer_data = response.json()[0]
+        beer_data = response.json()[random.randint(0, 99)]
         return beer_data
     else:
         return None
 
 def create_beers():
+    print("Creating beers")
     beer_data = get_random_beer_from_api()
     store_ids = Store.objects.all()
     stock_quantities = [100, 50, 300, 1000]
-    prices = [4.99, 5.99, 6.99, 7.99, 8.99, 9.99]
+    abv = [4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5]
+    volume = [330.00, 355.00, 500.00, 650.00, 750.00, 1000.00, 1500.00, 2000.00, 5000.00]
+    ingredients = [ 'malt', 'barely', 'gluten', 'hops', 'yeast', 'water', 'sugar', 'flavorings', 'preservatives']
+    price = [5.99, 6.99, 7.99, 8.99, 9.99, 10.99, 11.99, 12.99, 13.99, 14.99]
 
     if beer_data:
         beer = Beer.objects.create(
             name=beer_data['name'],
-            description=beer_data['description'],
+            description='description ',
             stock_quantity=random.choice(stock_quantities),
-            price=random.choice(prices),
+            price=random.choice(price),
             store_id=random.choice(store_ids),
-            beer_image=beer_data['image_url'],
-            volume=beer_data['volume']['value'],
-            abv=beer_data['abv'],
-            ingredients= beer_data['ingredients']['malt'][0]['name'],
+            beer_image=beer_data['image'],
+            volume=random.choice(volume),
+            abv= random.choice(abv),
+            ingredients=', '.join(ingredients)
         )
+        print(beer.id)
         return beer
     else:
         return None
@@ -144,6 +163,7 @@ def run_seed(self, mode):
         return
      for i in range(10):
         create_users()
+        create_profile()
         create_stores()
-     for i in range(100):
+     for i in range(10):
         create_beers()
