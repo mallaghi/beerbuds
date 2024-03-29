@@ -5,6 +5,7 @@ local_settings.py
 # db.sqlite3-journal
 .pyenv
 venv
+db.sqlite3
 
 # ignore ALL .log files
 *.log
