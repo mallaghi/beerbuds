@@ -4,6 +4,7 @@
   font-family: poppins;
   box-sizing: border-box;
 }
+
 body{
   margin: 0px;
   padding: 0px;
@@ -66,9 +67,10 @@ a{
   color: #cf2728;
   transition: all ease 0.2s;
 }
-.content{
+/* .content{
   padding: 6rem 6rem;
-}
+} */
+
 /* footer ============================== */
 footer{
   background-color: #080808;
@@ -250,4 +252,121 @@ footer{
   .footer-menu-box{
     margin: 0px;
   }
+}
+
+/*--------------- HOME PAGE ----------------------- */
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+}
+
+.cover_container {
+  position: relative;
+}
+
+.cover_container img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.cover_container a {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  padding: 24px 48px;
+  background-color: #080808;
+  color: #ffffff;
+  font-weight: 500;
+  border: 2px solid transparent;
+  transition: border-color 0.5s ease; /* Transition for border color */
+  letter-spacing: 0.2cm;
+}
+
+.cover_container a:hover {
+  border-color: #ffffff;
+}
+
+/* Home Page Grid */
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 0fr 0fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+.grid-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  border: 1px solid black;
+  position: relative;
+  overflow: hidden; /* Ensure images don't overflow */
+  width: 637px;
+  height: 637px;
+}
+
+.grid-item img {
+  width: 100%; /* Ensure images fill the grid items */
+  height: 100%;
+  object-fit: cover; /* Maintain aspect ratio and cover entire space */
+  transition: filter 0.5s ease, transform 0.5s ease;
+  border: none;
+}
+
+.card-overlay {
+  position: absolute;
+  top: 50%; /* center horizontally */
+  left: 0;
+  width: 100%;
+  text-align: center;
+  transform: translateY(-50%); /* Center vertically */
+  transition: opacity 0.75s ease;
+  opacity: 0;
+}
+
+.grid-item:hover img {
+  filter: blur(3px);
+  transform: scale(1.2);
+}
+
+.grid-item:hover .card-overlay {
+  opacity: 1;
+}
+
+.grid-item h1 {
+  font-weight: 600;
+  font-size: 36px;
+  padding-inline-start: 16px;
+  padding-inline-end: 16px;
+}
+
+#dark-image h1 {
+  font-weight: 600;
+  font-size: 36px;
+  color: #ffffff;
+  padding-inline-start: 16px;
+  padding-inline-end: 16px;
+}
+
+.grid-item h5 {
+  padding-inline-start: 16px;
+  padding-inline-end: 16px;
+  font-weight: 400;
+}
+
+.grid-item a {
+  color: #ffffff;
+  font-weight: 500;
+  border: 2px solid transparent;
+  transition: border-color 0.5s ease;
+}
+
+.grid-item a:hover {
+  border-color: #ffffff;
 }
