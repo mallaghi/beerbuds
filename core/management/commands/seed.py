@@ -177,12 +177,13 @@ def create_beers():
             stock_quantity=random.choice(stock_quantities),
             price=random.choice(price),
             store_id=random.choice(store_ids),
-            beer_image=beer_data['image'],
             volume=random.choice(volume),
             abv= random.choice(abv),
             ingredients=', '.join(ingredients),
-            image = '../../..static/images/beer${image_number}.jpg'
+           beer_image = 'https://github.com/mallaghi/beerbuds/blob/09ea873296e802db9bb6d71d21048580b4855621/beer{}.png'.format(image_number)
         )
+
+
         print(beer.id)
         return beer
     else:
@@ -196,5 +197,5 @@ def run_seed(self, mode):
         create_users()
         create_profile()
         create_stores()
-     for i in range(10):
+     for i in range(20):
         create_beers()
