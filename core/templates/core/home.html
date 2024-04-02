@@ -6,7 +6,7 @@
 
 <div class="cover_container">
   <img src="media/beer_images/katherine-conrad-unsplash.jpg" alt="cover image of beer" >
-  <a href="{% url 'marketplace:beer_index' %}" class="center text-white rounded"> BEERBUDS || ONLINE STORE </a>
+  <a href="{% url 'marketplace:beer_index' %}" class="center button text-white rounded"> BEERBUDS || ONLINE STORE </a>
 </div>
 
 <div class="container mx-auto">
@@ -16,48 +16,66 @@
       <h1 class="text-center mt-2 font-extrabold text-lg border-b-indigo-500"> EXPLORE THE WORLD'S WIDEST SELECTION OF BEER, ALE, AND STOUTS </h1>
     </div>
     <div>
-      <a href="{% url 'marketplace:beer_index'%}" class="center rounded-full bg-black text-white px-12 py-2 mt-2 mb-2 hover:border-slate-400"> Shop Now </a>
+      <a href="{% url 'marketplace:beer_index'%}" class="center button rounded-full bg-black text-white px-12 py-2 mt-2 mb-2 hover:border-slate-400"> Shop Now </a>
     </div>
   </div>
 
-    <div class="grid grid-cols-2">
-      <a href="{% url 'user_actions:favourites_index' %}" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-700">View all Favourites</a>
+  <div class="grid grid-cols-4 gap-4">
+    {% for beer in beers %}
+      <div class="max-w-sm rounded overflow-hidden shadow-lg">
+        <a href="{% url 'marketplace:beer_show' beer.id %}" >
+          <img class="w-full" src="/media/beer_images/Beer-bottles.jpg" alt="Beer">
+          <p class="center card-header text-sm mb-2 mt-2"> {{ beer.name }} </p>
+        </a>
+        <div class="px-6 py-4">
+          <div class="card-text">
+            <div class="card-price">
+              <p> £{{beer.price}} </p>
+            </div>
+            <div class="card-cart">
+              <a href ="{% url 'marketplace:user_cart' %}" class="cart">
+                <i class="fas fa-cart-shopping"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="grid-container">
+
+    <div class="grid-item">
+      <img src="media/beer_images/alex-foret-CuOuLh_ELjo-unsplash.jpg" alt="beer bottle">
+      <div class="card-overlay">
+        <h1> JOIN THE REVOLUTION </h1>
+        <a href="{% url 'core:signup' %}" class="center button rounded-full bg-black text-white px-12 py-2 mt-2 mb-2"> Sign Up Today</a>
+      </div>
     </div>
 
-    <div class="grid-container">
-
-      <div class="grid-item">
-        <img src="media/beer_images/alex-foret-CuOuLh_ELjo-unsplash.jpg" alt="beer bottle">
-        <div class="card-overlay">
-          <h1> JOIN THE REVOLUTION </h1>
-          <a href="{% url 'core:signup' %}" class="center rounded-full bg-black text-white px-12 py-2 mt-2 mb-2"> Sign Up Today</a>
-        </div>
+    <div class="grid-item">
+      <img src="media/beer_images/Beer-bottles.jpg" alt="beer bottles">
+      <div class="card-overlay">
+        <h1> OUR REVIEWS </h1>
+        <a href="{% url 'user_actions:reviews_index' %}" class="center button rounded-full bg-black text-white px-12 py-2 mt-2 mb-2"> View all our Reviews</a>
       </div>
-
-      <div class="grid-item">
-        <img src="media/beer_images/Beer-bottles.jpg" alt="beer bottles">
-        <div class="card-overlay">
-          <h1> OUR REVIEWS </h1>
-          <a href="{% url 'user_actions:reviews_index' %}" class="center rounded-full bg-black text-white px-12 py-2 mt-2 mb-2"> View all our Reviews</a>
-        </div>
-      </div>
-
-      <div class="grid-item">
-        <img src="media/beer_images/cover_unsplash.jpg" alt="cinematic beer">
-        <div class="card-overlay" id="dark-image">
-          <h1> START YOUR SELLING JOURNEY TODAY </h1>
-          <a class="center rounded-full bg-black text-white px-12 py-2 mt-2 mb-2" href="{% url 'marketplace:create_store' %}"> Become a BeerBud </a>
-        </div>
-      </div>
-
-      <div class="grid-item">
-        <img src="media/beer_images/elevate-1Lzqcm2C0RI-unsplash.jpg" alt="people enjoying beer">
-        <div class="card-overlay">
-          <a class="center rounded-full bg-black text-white px-12 py-2 mt-2 mb-2" href="/"> Our Story </a>
-        </div>
-      </div>
-
     </div>
+
+    <div class="grid-item">
+      <img src="media/beer_images/cover_unsplash.jpg" alt="cinematic beer">
+      <div class="card-overlay" id="dark-image">
+        <h1> START YOUR SELLING JOURNEY TODAY </h1>
+        <a class="center button rounded-full bg-black text-white px-12 py-2 mt-2 mb-2" href="{% url 'marketplace:create_store' %}"> Become a BeerBud </a>
+      </div>
+    </div>
+
+    <div class="grid-item">
+      <img src="media/beer_images/elevate-1Lzqcm2C0RI-unsplash.jpg" alt="people enjoying beer">
+      <div class="card-overlay">
+        <a class="center button rounded-full bg-black text-white px-12 py-2 mt-2 mb-2" href="/"> Our Story </a>
+      </div>
+    </div>
+  </div>
 
 </div>
 

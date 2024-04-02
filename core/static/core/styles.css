@@ -292,6 +292,28 @@ footer{
   border-color: #ffffff;
 }
 
+/* Home Page Cards */
+
+.card-header {
+  font-weight: 600;
+  font-size: 24px;
+}
+
+.card-text {
+  background-color: #888888;
+  width: 100%;
+  padding-inline: 12px;
+  border-radius: 5px;
+  transition: opacity 0.5s ease;
+  opacity: 0.75;
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-text:hover  {
+  opacity: 2.0
+}
+
 /* Home Page Grid */
 
 .grid-container {
