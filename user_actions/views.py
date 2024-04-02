@@ -83,3 +83,14 @@ class ReviewDelete(DeleteView):
     def form_valid(self, form):
         messages.success(self.request, "The review was deleted successfully.")
         return super(ReviewDelete,self).form_valid(form)
+
+# class FavouriteDelete(DeleteView):
+#     model = Favourite
+#     # get the url to redirect to the beer_reviews_index page
+#     def get_success_url(self):
+#         beer_id = self.kwargs['beer_id']
+#         # return reverse_lazy('user_actions:beer_reviews_index', kwargs={'beer_id': beer_id})
+
+#     def form_valid(self, form):
+#         messages.success(self.request, "Beer was removed from favourites.")
+#         return super(FavouriteDelete,self).form_valid(form)
