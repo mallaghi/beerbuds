@@ -13,11 +13,26 @@ def beer_index(request):
   return render(request,'marketplace/beer_index.html', {'beers': beers })
 
 def beer_show(request, id):
-  form = CartItemForm()
-  beer = get_object_or_404(Beer, id=id)
-  reviews = Review.objects.filter(beer_id=id)
-  favourites_form = FavouriteForm()
-  return render(request, 'marketplace/beer_show.html', {'beer': beer, 'beer_reviews': reviews, 'form': form, 'favourites_form': favourites_form})
+    form = CartItemForm()
+    beer = get_object_or_404(Beer, id=id)
+    reviews = Review.objects.filter(beer_id=id)
+    favourites_form = FavouriteForm()
+    user_profile = get_object_or_404(Profile, user_id=request.user)
+    user_cart = Cart.objects.filter(profile_id=user_profile).first()
+    beer_in_cart = user_cart.cart_items.filter(beer_id=id).first() if user_cart else None
+
+    if request.method == 'POST':
+        form = CartItemForm(request.POST)
+        if form.is_valid():
+            quantity = form.cleaned_data['quantity']
+            if beer_in_cart:
+                beer_in_cart.quantity += quantity
+                beer_in_cart.save()
+                messages.success(request, f"added {quantity} more of {beer.name} to your cart!")
+
+            return redirect('marketplace:beer_show', id=id)
+
+    return render(request, 'marketplace/beer_show.html', {'beer': beer, 'beer_reviews': reviews, 'form': form, 'beer_in_cart': beer_in_cart, 'favourites_form': favourites_form})
 #   reviews = Review.objects.filter(beer_id=beer_id)
 #   return render(request, 'user_actions/beer_reviews_index.html', {'beer_reviews': reviews})
 
@@ -100,6 +115,15 @@ def user_cart(request):
 
     return render(request, 'marketplace/user_cart.html', {'user_cart': user_carts})
 
+
+def store_dash(request):
+    store = Store.objects.filter(user=request.user)
+    return render(request, 'marketplace/store_dash.html', {'store': store})
+
+def store_dash(request):
+   store = Store.objects.filter(user_id=request.user)
+   return render(request, 'marketplace/store_dash.html', {'store': store})
+
 def delete_cart_item(request, id):
     cart_item = get_object_or_404(CartItem, pk = id)
     if request.method == 'POST':
@@ -108,9 +132,8 @@ def delete_cart_item(request, id):
         messages.success(request, alert)
     return redirect("/user_cart")
 
-def store_dash(request):
-   store = Store.objects.filter(user_id=request.user)
-   return render(request, 'marketplace/store_dash.html', {'store': store})
+# this is what we can access from store_dash --> store and store info.
+# so below line will not work
 
 def delete_beer(request, id):
     beer = Beer.objects.get(pk=id)
