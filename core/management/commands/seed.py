@@ -139,18 +139,49 @@ def create_beers():
     volume = [330.00, 355.00, 500.00, 650.00, 750.00, 1000.00, 1500.00, 2000.00, 5000.00]
     ingredients = [ 'malt', 'barely', 'gluten', 'hops', 'yeast', 'water', 'sugar', 'flavorings', 'preservatives']
     price = [5.99, 6.99, 7.99, 8.99, 9.99, 10.99, 11.99, 12.99, 13.99, 14.99]
+    image_number = random.randint(1, 6)
+    descriptions = [
+    "Crisp and refreshing with hints of citrus and floral notes.",
+    "Bold and robust, boasting a rich caramel aroma and smooth finish.",
+    "Light-bodied with a subtle malt sweetness and a crisp, clean finish.",
+    "Complex and full-bodied, featuring notes of roasted coffee and dark chocolate.",
+    "A classic wheat beer with a refreshing, fruity flavor and a hint of spice.",
+    "Smooth and creamy, with a balanced blend of malt and hops.",
+    "A hop-forward IPA bursting with tropical fruit and pine aromas.",
+    "A traditional Belgian ale with a spicy yeast character and fruity undertones.",
+    "Refreshingly tart and effervescent, with a zesty citrus profile.",
+    "A smooth and malty lager with a crisp, clean finish.",
+    "Bold and smoky, with a robust malt backbone and hints of caramel.",
+    "Light and sessionable, with a subtle hop bitterness and a dry finish.",
+    "A rich and decadent stout with flavors of roasted barley and dark fruit.",
+    "A golden ale with a light malt sweetness and a subtle hop aroma.",
+    "A fruity and aromatic pale ale with a crisp, refreshing taste.",
+    "A bold and spicy saison with complex yeast flavors and a dry finish.",
+    "A smooth and creamy oatmeal stout with notes of chocolate and coffee.",
+    "A crisp and refreshing pilsner with a clean, malt-forward profile.",
+    "A juicy and hazy IPA bursting with tropical fruit flavors.",
+    "A malty and caramel-forward amber ale with a smooth, balanced finish.",
+    "A citrusy and refreshing American wheat beer with a clean, crisp taste.",
+    "A smooth and creamy milk stout with a hint of sweetness and a velvety texture.",
+    "A light and easy-drinking blonde ale with subtle hop bitterness.",
+    "A bold and bitter double IPA with intense hop aromas and flavors.",
+    "A rich and complex barleywine with layers of caramel, toffee, and dried fruit notes."
+]
+
+
 
     if beer_data:
         beer = Beer.objects.create(
             name=beer_data['name'],
-            description='description ',
+            description=random.choice(descriptions),
             stock_quantity=random.choice(stock_quantities),
             price=random.choice(price),
             store_id=random.choice(store_ids),
             beer_image=beer_data['image'],
             volume=random.choice(volume),
             abv= random.choice(abv),
-            ingredients=', '.join(ingredients)
+            ingredients=', '.join(ingredients),
+            image = '../../..static/images/beer${image_number}.jpg'
         )
         print(beer.id)
         return beer
