@@ -263,6 +263,18 @@ footer{
   width: fit-content;
 }
 
+.button {
+  background-color: #080808;
+  color: #ffffff;
+  font-weight: 500;
+  border: 2px solid transparent;
+  transition: border-color 0.5s ease; /* Transition for border color */
+}
+
+.button:hover {
+  border-color: #ffffff;
+}
+
 .cover_container {
   position: relative;
 }
@@ -293,6 +305,18 @@ footer{
 }
 
 /* Home Page Cards */
+
+.card {
+  border-radius: 3%;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  transition: transform 0.25s ease, box-shadow 0.45s ease;
+  border: none;
+}
+
+.card:hover {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 6px 12px;
+  transform: scale(1.03);
+}
 
 .card-header {
   font-weight: 600;
@@ -341,6 +365,11 @@ footer{
   border: none;
 }
 
+.grid-item:hover img {
+  filter: blur(3px);
+  transform: scale(1.25);
+}
+
 .card-overlay {
   position: absolute;
   top: 50%; /* center horizontally */
@@ -350,11 +379,6 @@ footer{
   transform: translateY(-50%); /* Center vertically */
   transition: opacity 0.75s ease;
   opacity: 0;
-}
-
-.grid-item:hover img {
-  filter: blur(3px);
-  transform: scale(1.2);
 }
 
 .grid-item:hover .card-overlay {
@@ -380,15 +404,4 @@ footer{
   padding-inline-start: 16px;
   padding-inline-end: 16px;
   font-weight: 400;
-}
-
-.grid-item a {
-  color: #ffffff;
-  font-weight: 500;
-  border: 2px solid transparent;
-  transition: border-color 0.5s ease;
-}
-
-.grid-item a:hover {
-  border-color: #ffffff;
 }

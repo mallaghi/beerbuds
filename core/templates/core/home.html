@@ -15,19 +15,16 @@
     <div class="mb-2">
       <h1 class="text-center mt-2 font-extrabold text-lg border-b-indigo-500"> EXPLORE THE WORLD'S WIDEST SELECTION OF BEER, ALE, AND STOUTS </h1>
     </div>
-    <div>
-      <a href="{% url 'marketplace:beer_index'%}" class="center button rounded-full bg-black text-white px-12 py-2 mt-2 mb-2 hover:border-slate-400"> Shop Now </a>
-    </div>
   </div>
 
   <div class="grid grid-cols-4 gap-4">
     {% for beer in beers %}
-      <div class="max-w-sm rounded overflow-hidden shadow-lg">
+      <div class="card max-w-sm rounded overflow-hidden shadow-lg mb-6">
         <a href="{% url 'marketplace:beer_show' beer.id %}" >
           <img class="w-full" src="/media/beer_images/Beer-bottles.jpg" alt="Beer">
           <p class="center card-header text-sm mb-2 mt-2"> {{ beer.name }} </p>
         </a>
-        <div class="px-6 py-4">
+        <div class="px-6 py-4 mb-4">
           <div class="card-text">
             <div class="card-price">
               <p> £{{beer.price}} </p>
