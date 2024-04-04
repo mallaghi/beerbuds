@@ -2,9 +2,11 @@ from django.shortcuts import render, redirect
 from .forms import SignupForm
 from marketplace.models import Profile
 from django.http import HttpResponse
+from marketplace.models import Beer
 
 def home(request):
-    return render(request, 'core/home.html')
+    beers = Beer.objects.all()[:4]
+    return render(request, 'core/home.html', {'beers': beers })
 
 def signup(request):
     if request.method == 'POST':
