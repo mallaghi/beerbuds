@@ -84,13 +84,14 @@ class ReviewDelete(DeleteView):
         messages.success(self.request, "The review was deleted successfully.")
         return super(ReviewDelete,self).form_valid(form)
 
-# class FavouriteDelete(DeleteView):
-#     model = Favourite
-#     # get the url to redirect to the beer_reviews_index page
-#     def get_success_url(self):
-#         beer_id = self.kwargs['beer_id']
-#         # return reverse_lazy('user_actions:beer_reviews_index', kwargs={'beer_id': beer_id})
-
-#     def form_valid(self, form):
-#         messages.success(self.request, "Beer was removed from favourites.")
-#         return super(FavouriteDelete,self).form_valid(form)
+def delete_favourite(request, beer_id):
+    # Get the current user's profile
+    profile = get_object_or_404(Profile, user_id=request.user)
+    # Get the beer object
+    beer = get_object_or_404(Beer, id=beer_id)
+    # Get the favorite object for the specified beer and profile
+    favourite = get_object_or_404(Favourite, beer_id=beer, profile_id=profile)
+    # Delete the favorite object
+    favourite.delete()
+    # Redirect to a relevant URL, for example, the beer show page
+    return redirect(reverse('marketplace:beer_show', kwargs={'id': beer_id}))
