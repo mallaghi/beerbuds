@@ -136,11 +136,6 @@ def user_cart(request):
 
     return render(request, 'marketplace/user_cart.html', {'user_cart': user_carts})
 
-
-def store_dash(request):
-    store = Store.objects.filter(user=request.user)
-    return render(request, 'marketplace/store_dash.html', {'store': store})
-
 def store_dash(request):
    store = Store.objects.filter(user_id=request.user)
    return render(request, 'marketplace/store_dash.html', {'store': store})
