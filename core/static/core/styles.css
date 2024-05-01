@@ -18,6 +18,10 @@ a{
   text-decoration: none;
 }
 
+/* .content{
+  height:95vh;
+} */
+
 
 /* navigation bar ============================== */
 .navigation{
@@ -34,6 +38,7 @@ a{
   background-color: #080808;
   border: 1px solid rgba(0,0,0,0.03);
 }
+
 .menu{
   display: flex;
 }

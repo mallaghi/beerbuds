@@ -7,8 +7,9 @@ from user_actions.models import Favourite
 from .models import Beer, Store, User, CartItem, Cart, Profile, Order, OrderItem
 from user_actions.models import Review
 from django.contrib.auth.decorators import login_required
+# from django.views.decorators.cache import cache_control
 
-
+# @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def beer_index(request):
   beers = Beer.objects.all()
   return render(request,'marketplace/beer_index.html', {'beers': beers })
@@ -16,7 +17,6 @@ def beer_index(request):
 def beer_show(request, id):
     form = CartItemForm()
     beer = get_object_or_404(Beer, id=id)
-    print("Beer:", beer)
     reviews = Review.objects.filter(beer_id=id)
     favourites_form = FavouriteForm()
     user_profile = get_object_or_404(Profile, user_id=request.user)
@@ -24,13 +24,9 @@ def beer_show(request, id):
     beer_in_cart = user_cart.cart_items.filter(beer_id=id).first() if user_cart else None
 
     if request.user.is_authenticated:
-        print("User Profile:", user_profile)
-        print("Beer:", beer)
-        has_favorited = Favourite.objects.filter(profile_id=user_profile, beer_id=beer).exists()
-        print("Has Favorited:", has_favorited)
-        # has_favorited = Favourite.objects.filter(profile_id=user_profile, beer_id=beer).exists()
+        has_favourited = Favourite.objects.filter(profile_id=user_profile, beer_id=beer).exists()
     else:
-        has_favorited = False
+        has_favourited = False
 
     if request.method == 'POST':
         form = CartItemForm(request.POST)
@@ -43,17 +39,8 @@ def beer_show(request, id):
 
             return redirect('marketplace:beer_show', id=id)
 
-    # if request.user.is_authenticated:
-    #     print("User Profile:", user_profile)
-    #     print("Beer:", beer)
-    #     has_favorited = Favourite.objects.filter(profile_id=user_profile, beer_id=beer).exists()
-    #     print("Has Favorited:", has_favorited)
-    #     # has_favorited = Favourite.objects.filter(profile_id=user_profile, beer_id=beer).exists()
-    # else:
-    #     has_favorited = False
 
-
-    return render(request, 'marketplace/beer_show.html', {'beer': beer, 'beer_reviews': reviews, 'form': form, 'beer_in_cart': beer_in_cart, 'favourites_form': favourites_form, 'has_favorited': has_favorited})
+    return render(request, 'marketplace/beer_show.html', {'beer': beer, 'beer_reviews': reviews, 'form': form, 'beer_in_cart': beer_in_cart, 'favourites_form': favourites_form, 'has_favourited': has_favourited})
 #   reviews = Review.objects.filter(beer_id=beer_id)
 #   return render(request, 'user_actions/beer_reviews_index.html', {'beer_reviews': reviews})
 

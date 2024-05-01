@@ -8,7 +8,6 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import DeleteView
 from django.contrib import messages
 
-
 def create_review(request, beer_id):
     # Get the user's profile
     profile = get_object_or_404(Profile, user_id=request.user)
@@ -54,16 +53,15 @@ def add_favourite(request, beer_id):
                 favourite.profile_id = profile
                 favourite.beer_id = beer
                 favourite.save()
-                return render(request, 'marketplace/beer_show.html', {'favourites_form': favourites_form, 'beer': beer})
-
-                # redirect_url = reverse('marketplace:beer_show', kwargs={'id': beer_id})
-                # return redirect(redirect_url)
+                return redirect(reverse('marketplace:beer_show', kwargs={'id': beer_id}))
             except IntegrityError:
                 favourites_form.add_error(None, "You have already favourited this beer.")
     else:
         favourites_form = FavouriteForm()
 
+    # return render(request, 'marketplace/beer_show.html', {'favourites_form': favourites_form, 'beer': beer})
     return render(request, 'marketplace/beer_show.html', {'favourites_form': favourites_form, 'beer': beer})
+
 
 def favourites_index(request):
     favourites = Favourite.objects.all()
@@ -89,9 +87,9 @@ def delete_favourite(request, beer_id):
     profile = get_object_or_404(Profile, user_id=request.user)
     # Get the beer object
     beer = get_object_or_404(Beer, id=beer_id)
-    # Get the favorite object for the specified beer and profile
+    # Get the favourite object for the specified beer and profile
     favourite = get_object_or_404(Favourite, beer_id=beer, profile_id=profile)
-    # Delete the favorite object
+    # Delete the favourite object
     favourite.delete()
     # Redirect to a relevant URL, for example, the beer show page
     return redirect(reverse('marketplace:beer_show', kwargs={'id': beer_id}))
