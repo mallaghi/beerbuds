@@ -1,14 +1,20 @@
 {% extends "core/base.html"%}
+
 {%block title%} Beers {% endblock %}
+{%load static %}
 {% block content %}
 
-<div class="cover_container">
-  <img src="media/beer_images/beer_feature-1.webp" alt="cover image of beer" >
-</div>
+<div class="page-container">
 
-  <div class="mx-auto page-container">
-    <div class="grid grid-cols-4 gap-4 content-start" >
+  <div class="section cover_container">
+    <img src="../media/beer_images/beer_feature-1.webp" alt="cover image of beer" >
+    <a href="#shop" class="center button text-white rounded"> SHOP </a>
+  </div>
+
+  <div id="shop" class="index-content container my-12 mx-auto grid grid-cols-4 gap-4 content-start">
+
       {% for beer in beers %}
+
       <div class="card max-w-sm rounded overflow-hidden shadow-lg mb-6">
         <a href="{% url 'marketplace:beer_show' beer.id %}" >
           <img class="w-full" src="/media/beer_images/Beer-bottles.jpg" alt="Beer">
@@ -27,8 +33,13 @@
           </div>
         </div>
       </div>
+
       {% endfor %}
+
     </div>
   </div>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@15.0.0/dist/smooth-scroll.polyfills.min.js"></script>
+<script src="{% static 'marketplace/smooth-scroll.js' %}"> </script>
 
 {% endblock %}

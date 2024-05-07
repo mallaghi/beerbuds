@@ -5,10 +5,12 @@
   box-sizing: border-box;
 }
 
-body{
+body {
   margin: 0px;
   padding: 0px;
   font-family: poppins;
+  height: 100vh;
+  background-color: #4B6858;
 }
 
 ul{
@@ -31,7 +33,7 @@ a{
   top: 0px;
   width: 100%;
   z-index: 100;
-  background-color: #080808;
+  background-color: #14110F;
   border: 1px solid rgba(0,0,0,0.03);
 }
 .menu{
@@ -76,7 +78,7 @@ footer {
   left: 0;
   bottom: 0;
   width: 100%;
-  background-color: #080808;
+  background-color: #14110F;
   padding: 60px 10px;
   position: relative;
   border-top: 1px solid rgba(236,236,236);
@@ -161,7 +163,7 @@ footer {
 .copyright {
   padding: 5px;
   color: #5a5a5a;
-  background-color: #080808;
+  background-color: #14110F;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -185,7 +187,7 @@ footer {
     top: 64px;
     left: 0px;
     background-color: #0a0909;
-    border-bottom: 1px solid #080808;
+    border-bottom: 1px solid #14110F;
     width: 100%;
     padding: 0px;
     margin: 0px;
@@ -208,7 +210,7 @@ footer {
     align-items: center;
     margin: 0px;
     padding: 25px 20px;
-    border: 1px solid #080808;
+    border: 1px solid #14110F;
   }
   .navigation .menu li a:hover{
     color: #111010;
@@ -268,7 +270,7 @@ footer {
 }
 
 .button {
-  background-color: #080808;
+  background-color: #14110F;
   color: #ffffff;
   font-weight: 500;
   border: 2px solid transparent;
@@ -285,7 +287,7 @@ footer {
 
 .cover_container img {
   width: 100%;
-  height: auto;
+  height: 100vh;
   object-fit: cover;
 }
 
@@ -296,7 +298,7 @@ footer {
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   padding: 24px 48px;
-  background-color: #080808;
+  background-color: #14110F;
   color: #ffffff;
   font-weight: 500;
   border: 2px solid transparent;
@@ -315,7 +317,7 @@ footer {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   transition: transform 0.25s ease, box-shadow 0.45s ease;
   border: none;
-  background-color: slategray;
+  background-color: F1FAEE;
   color: whitesmoke;
 }
 
@@ -332,7 +334,7 @@ footer {
 }
 
 .card-text {
-  background-color: #000000;
+  background-color: #14110F;
   width: 100%;
   padding-inline: 12px;
   padding-block: 4px;
@@ -359,7 +361,7 @@ footer {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  border: 1px solid black;
+  border: 1px solid 14110F;
   position: relative;
   overflow: hidden; /* Ensure images don't overflow */
   width: 637px;
@@ -418,6 +420,14 @@ footer {
 /* INDEX PAGE */
 
 .page-container {
-  margin-top: 8rem;
-  margin-bottom: 1rem;
+  width: 100%;
+  height: 100%;
+  margin-block-end: 20px;
+  /* scroll-behavior: smooth; */
+}
+
+.index-content {
+  width: 100%;
+  height: auto;
+  margin-top: 16px;
 }
