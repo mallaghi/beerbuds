@@ -6,8 +6,11 @@
 
 {% for favourites in beer_favourites %}
   <br></br>
-  {{ favourites.profile_id }}
-  {{ favourites.beer_id }}
+  <div class="pt-10">
+    {{ favourites.profile_id }}
+    {{ favourites.beer_id }}
+  </div>
+
 {% endfor %}
 
 

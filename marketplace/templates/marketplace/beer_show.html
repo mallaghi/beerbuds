@@ -1,10 +1,10 @@
 {% extends "core/base.html" %}
-
+{% load static %}
 {% block title %}{{ beer.name }}{% endblock %}
 
 {% block content %}
 
-  <div>
+ {% comment %} Action Messages {% endcomment %}
     {% if messages %}
     <ul class="messages bg-green-200 p-4 rounded">
       {% for message in messages %}
@@ -13,75 +13,130 @@
         </li>
       {% endfor %}
     </ul>
-  {% endif %}
-  
+    {% endif %}
     <div class="p-4 mb-4 absolute left-0">
       <a href="{% url 'marketplace:beer_index' %}" class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-700">  <-- Back to beers </a>
     </div>
-  </div>
 
-  <div class="container-sm flex flex-row justify-between rounded-xl px-10 pt-4">
+  {% comment %} Page content {% endcomment %}
+<div class="page-container container-sm flex flex-row justify-between rounded-xl px-10 pt-4">
 
+    {% comment %} Beer Image {% endcomment %}
     <div class="max-w-xs rounded-xl basis-2/5 flex justify-center">
       <img src="{{ beer.beer_image }}" alt="{{ beer.name }}" class="mt-4 h-auto max-h-80">
     </div>
 
-    <div class="p-4 rounded-xl basis-3/5">
-      <div class="container p-4 border-2 rounded-xl border-transparent">
-        <div class="flex flex-row justify-between">
-          <h1 class="text-2xl font-bold mb-4">{{ beer.name }}</h1>
-          <a href="{% url 'user_actions:add_favourite' beer.id %}">
-            <button class="fa-regular fa-heart" style="color: #ff0000;"></button>
-          </a>
-          {% comment %} <a href="{% url 'user_actions:add_favourite' beer.id %}" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-700"></a> {% endcomment %}
-        </div>
 
-        <div class="flex flex-row justify-between">
-          <p>Price: £{{ beer.price }}</p>
-          <p>Alcohol Percentage: {{ beer.abv }}%</p>
-        </div>
-        <p>Rating: </p>
-
-        {% comment %} {% for review in beer_reviews %}
-          {{ review.rating }}
-        {% endfor %} {% endcomment %}
-
-        <p>Description: </p>
-        <p class="text-sm mb-4">{{ beer.description }}</p>
+    {% comment %} Favourite Button {% endcomment %}
+  <div class="p-4 rounded-xl basis-3/5">
+       <div class="container p-4 border-2 rounded-xl border-transparent">
           <div class="flex flex-row justify-between">
-            <a href="{% url 'user_actions:beer_reviews_index' beer.id %}" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700">See Reviews</a>
-            <a href="{% url 'user_actions:create_review' beer.id %}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">Write a Review</a>
+              <h1 class="text-2xl font-bold mb-4">{{ beer.name }}</h1>
+              {% if request.user.is_authenticated %}
+                  {% if has_favourited %}
+                      <div class="mt-6">
+                          <form method="post" action="{% url 'user_actions:delete_favourite' beer.id %}">
+                              {% csrf_token %}
+                              <button type="submit">
+                                  <i class="fa-solid fa-heart" style="color: #ff0000;"></i>
+                              </button>
+                          </form>
+                      </div>
+                  {% else %}
+                      <div class="mt-6">
+                          <form method="post" action="{% url 'user_actions:add_favourite' beer.id %}">
+                              {% csrf_token %}
+                              <button type="submit">
+                                  <i class="fa-regular fa-heart" style="color: #ff0000;"></i>
+                              </button>
+                          </form>
+                      </div>
+                  {% endif %}
+              {% else %}
+                  <!-- If user is not authenticated, you may display a message or provide a link to the login page -->
+                  <p>Please log in to favorite this beer.</p>
+              {% endif %}
           </div>
-          <div class="mt-6">
-            {% if beer_in_cart %}
-              <form method="post">
-                {% csrf_token %}
-                <div class="flex items-center space-x-4">
-                  <label for="quantity" class="text-sm">Update Quantity:</label>
-                  {{ form.quantity }}
-                  <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue">
-                    Update Cart
-                  </button>
-                </div>
-              </form>
-            {% else %}
-              <form method="post" action="{% url 'marketplace:add_to_cart' beer.id %}">
-                {% csrf_token %}
-                <div class="flex items-center space-x-4">
-                  <label for="quantity" class="text-sm">Quantity:</label>
-                  {{ form.quantity }}
-                  <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue">
-                    Add to Cart
-                  </button>
-                </div>
-              </form>
-            {% endif %}
-          </div>
-    </div>
-  </div>
+      </div>
 
+        {% comment %} <div class="container p-4 border-2 rounded-xl border-transparent">
+          <div class="flex flex-row justify-between">
+              <h1 class="text-2xl font-bold mb-4">{{ beer.name }}</h1>
+              <div class="mt-6">
+                  {% if request.user.is_authenticated %}
+                  <form id="favouriteForm" method="post" action="{% if has_favourited %}{% url 'user_actions:delete_favourite' beer.id %}{% else %}{% url 'user_actions:add_favourite' beer.id %}{% endif %}">
+                      {% csrf_token %}
+                      <button type="button" id="favouriteButton">
+                          {% if has_favourited %}
+                          <i class="fa-solid fa-heart" style="color: #ff0000;"></i>
+                          {% else %}
+                          <i class="fa-regular fa-heart" style="color: #ff0000;"></i>
+                          {% endif %}
+                      </button>
+                  </form>
+                  {% else %}
+                  <!-- If user is not authenticated, you may display a message or provide a link to the login page -->
+                  <p>Please log in to favourite this beer.</p>
+                  {% endif %}
+              </div>
+          </div>
+      </div> {% endcomment %}
+
+
+        <div class="beer-information-and-actions-card">
+
+          {% comment %} Beer Information  {% endcomment %}
+          <div class="flex flex-row justify-between">
+            <p>Price: £{{ beer.price }}</p>
+            <p>Alcohol Percentage: {{ beer.abv }}%</p>
+          </div>
+          <p>Rating: </p>
+          {% comment %} {% for review in beer_reviews %}
+            {{ review.rating }}
+          {% endfor %} {% endcomment %}
+          <p>Description: </p>
+          <p class="text-sm mb-4">{{ beer.description }}</p>
+
+          {% comment %} Review Buttons {% endcomment %}
+            <div class="flex flex-row justify-between">
+              <a href="{% url 'user_actions:beer_favourites_index' beer.id %}" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-700">See Favourites</a>
+              <a href="{% url 'user_actions:beer_reviews_index' beer.id %}" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700">See Reviews</a>
+              <a href="{% url 'user_actions:create_review' beer.id %}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">Write a Review</a>
+            </div>
+
+            {% comment %} Add to Cart Buttons {% endcomment %}
+            <div class="mt-6">
+              {% if beer_in_cart %}
+                <form method="post">
+                  {% csrf_token %}
+                  <div class="flex items-center space-x-4">
+                    <label for="quantity" class="text-sm">Update Quantity:</label>
+                    {{ form.quantity }}
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue">
+                      Update Cart
+                    </button>
+                  </div>
+                </form>
+              {% else %}
+                <form method="post" action="{% url 'marketplace:add_to_cart' beer.id %}">
+                  {% csrf_token %}
+                  <div class="flex items-center space-x-4">
+                    <label for="quantity" class="text-sm">Quantity:</label>
+                    {{ form.quantity }}
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue">
+                      Add to Cart
+                    </button>
+                  </div>
+                </form>
+              {% endif %}
+            </div>
+      </div>
+  </div>
+</div>
+<script src="{% static 'marketplace/favourite_toggle.js' %}"></script>
 {% endblock %}
 
 {% comment %} need to add logic to caluclate and display ratings,
 need to add logic likely javascript to get the favourite button working and have it not leave the show page when clicked
 need to figure out styling for show page and where to put reviews buttons {% endcomment %}
+{% comment %} <script src="{% static 'marketplace/favourite_button.js' %}"> </script> {% endcomment %}

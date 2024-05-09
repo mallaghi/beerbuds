@@ -10,6 +10,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
+        ('marketplace', '0010_alter_store_user_id'),
         ('marketplace', '0011_alter_beer_price'),
     ]
 

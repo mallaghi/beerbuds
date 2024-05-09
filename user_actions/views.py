@@ -8,7 +8,6 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import DeleteView
 from django.contrib import messages
 
-
 def create_review(request, beer_id):
     # Get the user's profile
     profile = get_object_or_404(Profile, user_id=request.user)
@@ -47,21 +46,22 @@ def add_favourite(request, beer_id):
     beer = get_object_or_404(Beer, id=beer_id)
 
     if request.method == 'POST':
-        form = FavouriteForm(request.POST)
-        if form.is_valid():
+        favourites_form = FavouriteForm(request.POST)
+        if favourites_form.is_valid():
             try:
-                favourite = form.save(commit=False)
+                favourite = favourites_form.save(commit=False)
                 favourite.profile_id = profile
                 favourite.beer_id = beer
                 favourite.save()
-                redirect_url = reverse('marketplace:beer_show', kwargs={'id': beer_id})
-                return redirect(redirect_url)
+                return redirect(reverse('marketplace:beer_show', kwargs={'id': beer_id}))
             except IntegrityError:
-                form.add_error(None, "You have already favourited this beer.")
+                favourites_form.add_error(None, "You have already favourited this beer.")
     else:
-        form = FavouriteForm()
+        favourites_form = FavouriteForm()
 
-    return render(request, 'user_actions/add_favourite.html', {'form': form, 'beer': beer})
+    # return render(request, 'marketplace/beer_show.html', {'favourites_form': favourites_form, 'beer': beer})
+    return render(request, 'marketplace/beer_show.html', {'favourites_form': favourites_form, 'beer': beer})
+
 
 def favourites_index(request):
     favourites = Favourite.objects.all()
@@ -81,3 +81,15 @@ class ReviewDelete(DeleteView):
     def form_valid(self, form):
         messages.success(self.request, "The review was deleted successfully.")
         return super(ReviewDelete,self).form_valid(form)
+
+def delete_favourite(request, beer_id):
+    # Get the current user's profile
+    profile = get_object_or_404(Profile, user_id=request.user)
+    # Get the beer object
+    beer = get_object_or_404(Beer, id=beer_id)
+    # Get the favourite object for the specified beer and profile
+    favourite = get_object_or_404(Favourite, beer_id=beer, profile_id=profile)
+    # Delete the favourite object
+    favourite.delete()
+    # Redirect to a relevant URL, for example, the beer show page
+    return redirect(reverse('marketplace:beer_show', kwargs={'id': beer_id}))
