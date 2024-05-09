@@ -139,7 +139,6 @@ def create_beers():
     volume = [330.00, 355.00, 500.00, 650.00, 750.00, 1000.00, 1500.00, 2000.00, 5000.00]
     ingredients = [ 'malt', 'barely', 'gluten', 'hops', 'yeast', 'water', 'sugar', 'flavorings', 'preservatives']
     price = [5.99, 6.99, 7.99, 8.99, 9.99, 10.99, 11.99, 12.99, 13.99, 14.99]
-    image_number = random.randint(1, 6)
     descriptions = [
     "Crisp and refreshing with hints of citrus and floral notes.",
     "Bold and robust, boasting a rich caramel aroma and smooth finish.",
@@ -180,7 +179,7 @@ def create_beers():
             volume=random.choice(volume),
             abv= random.choice(abv),
             ingredients=', '.join(ingredients),
-           beer_image = 'https://github.com/mallaghi/beerbuds/blob/09ea873296e802db9bb6d71d21048580b4855621/beer{}.png'.format(image_number)
+            beer_image = 'https://github.com/mallaghi/beerbuds/blob/0d022c2ae031829ef4696ab34acc20854f03a184/media/beer_images/beer6.png?raw=true'
         )
 
 
@@ -190,12 +189,12 @@ def create_beers():
         return None
 
 def run_seed(self, mode):
-     clear_data()
-     if mode == MODE_CLEAR:
+    clear_data()
+    if mode == MODE_CLEAR:
         return
-     for i in range(10):
+    for i in range(10):
         create_users()
         create_profile()
         create_stores()
-     for i in range(20):
+    for i in range(30):
         create_beers()
