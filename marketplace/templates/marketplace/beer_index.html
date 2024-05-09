@@ -1,14 +1,46 @@
 {% extends "core/base.html"%}
+
 {%block title%} Beers {% endblock %}
+{%load static %}
 {% block content %}
 
-  <div class="grid grid-cols-3 gap-4 content-start" >
-    {% for beer in beers %}
-      <div>
-        <div class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-700">
-          <a href="{% url 'marketplace:beer_show' beer.id %}" class="text-sm mb-4"> {{ beer.name }} </a>
+
+<div class="page-container">
+<!-- edit to allow merge -->
+  <div class="section cover_container">
+    <img src="../media/beer_images/beer_feature-1.webp" alt="cover image of beer" >
+    <a href="#shop" class="center button text-white rounded"> SHOP </a>
+  </div>
+
+  <div id="shop" class="index-content container my-12 mx-auto grid grid-cols-4 gap-4 content-start">
+
+      {% for beer in beers %}
+
+      <div class="card max-w-sm rounded overflow-hidden shadow-lg mb-6">
+        <a href="{% url 'marketplace:beer_show' beer.id %}" >
+          <img class="w-full" src="/media/beer_images/Beer-bottles.jpg" alt="Beer">
+          <p class="center card-header text-sm mb-2 mt-2"> {{ beer.name }} </p>
+        </a>
+        <div class="px-6 py-4 mb-4">
+          <div class="card-text">
+            <div class="card-price">
+              <p> £{{beer.price}} </p>
+            </div>
+            <div class="card-cart">
+              <a href ="{% url 'marketplace:user_cart' %}" class="cart">
+                <i class="fas fa-cart-shopping"></i>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
-    {% endfor %}
+
+      {% endfor %}
+
+    </div>
   </div>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@15.0.0/dist/smooth-scroll.polyfills.min.js"></script>
+<script src="{% static 'marketplace/smooth-scroll.js' %}"> </script>
+
 {% endblock %}

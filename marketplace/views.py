@@ -2,28 +2,31 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from .forms import StoreForm, BeerForm, CartItemForm
-<<<<<<< HEAD
-from .models import Beer, Store, User, CartItem, Cart, Profile
-from user_actions.models import Review
-=======
+from user_actions.forms import FavouriteForm
+from user_actions.models import Favourite
 from .models import Beer, Store, User, CartItem, Cart, Profile, Order, OrderItem
 from user_actions.models import Review
 from django.contrib.auth.decorators import login_required
->>>>>>> e54aa33bc5cb2f8d2f7e340a5357fd3e5154f25e
+# from django.views.decorators.cache import cache_control
 
-
+# @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def beer_index(request):
   beers = Beer.objects.all()
   return render(request,'marketplace/beer_index.html', {'beers': beers })
 
 def beer_show(request, id):
-<<<<<<< HEAD
     form = CartItemForm()
     beer = get_object_or_404(Beer, id=id)
     reviews = Review.objects.filter(beer_id=id)
+    favourites_form = FavouriteForm()
     user_profile = get_object_or_404(Profile, user_id=request.user)
     user_cart = Cart.objects.filter(profile_id=user_profile).first()
     beer_in_cart = user_cart.cart_items.filter(beer_id=id).first() if user_cart else None
+
+    if request.user.is_authenticated:
+        has_favourited = Favourite.objects.filter(profile_id=user_profile, beer_id=beer).exists()
+    else:
+        has_favourited = False
 
     if request.method == 'POST':
         form = CartItemForm(request.POST)
@@ -36,13 +39,8 @@ def beer_show(request, id):
 
             return redirect('marketplace:beer_show', id=id)
 
-    return render(request, 'marketplace/beer_show.html', {'beer': beer, 'beer_reviews': reviews, 'form': form, 'beer_in_cart': beer_in_cart})
-=======
-  form = CartItemForm()
-  beer = get_object_or_404(Beer, id=id)
-  reviews = Review.objects.filter(beer_id=id)
-  return render(request, 'marketplace/beer_show.html', {'beer': beer, 'beer_reviews': reviews, 'form': form})
->>>>>>> e54aa33bc5cb2f8d2f7e340a5357fd3e5154f25e
+
+    return render(request, 'marketplace/beer_show.html', {'beer': beer, 'beer_reviews': reviews, 'form': form, 'beer_in_cart': beer_in_cart, 'favourites_form': favourites_form, 'has_favourited': has_favourited})
 #   reviews = Review.objects.filter(beer_id=beer_id)
 #   return render(request, 'user_actions/beer_reviews_index.html', {'beer_reviews': reviews})
 
@@ -86,11 +84,7 @@ def create_beer(request):
         form = BeerForm()
     return render(request, 'marketplace/create_beer.html', {'form': form})
 
-<<<<<<< HEAD
-
-=======
 @login_required
->>>>>>> e54aa33bc5cb2f8d2f7e340a5357fd3e5154f25e
 def add_to_cart(request, beer_id):
     user_profile = get_object_or_404(Profile, user_id=request.user)
     beer = get_object_or_404(Beer, id=beer_id)
@@ -107,27 +101,16 @@ def add_to_cart(request, beer_id):
                 user_cart = user_carts[0]
             else:
                 user_cart = Cart.objects.create(profile_id=user_profile, total_price=0)
-<<<<<<< HEAD
-
-            cart_item = CartItem.objects.create(beer_id=beer, quantity=quantity)
-=======
             cart_item = CartItem.objects.create(beer_id=beer, quantity=quantity)
 
->>>>>>> e54aa33bc5cb2f8d2f7e340a5357fd3e5154f25e
             cart_item.save()
             user_cart.cart_items.add(cart_item)
             user_cart.calculate_total_price()
             user_cart.save()
             alert = f"{cart_item.quantity} {beer.name} added to cart"
             messages.success(request, alert)
-<<<<<<< HEAD
-            return redirect('marketplace:beer_show', id=beer_id)
-
-
-=======
 
         return redirect('marketplace:beer_show', id=beer_id)
->>>>>>> e54aa33bc5cb2f8d2f7e340a5357fd3e5154f25e
 
     else:
         form = CartItemForm()
@@ -140,18 +123,10 @@ def user_cart(request):
 
     return render(request, 'marketplace/user_cart.html', {'user_cart': user_carts})
 
-<<<<<<< HEAD
-
-def store_dash(request):
-    store = Store.objects.filter(user=request.user)
-    return render(request, 'marketplace/store_dash.html', {'store': store})
-
 def store_dash(request):
    store = Store.objects.filter(user_id=request.user)
    return render(request, 'marketplace/store_dash.html', {'store': store})
 
-=======
->>>>>>> e54aa33bc5cb2f8d2f7e340a5357fd3e5154f25e
 def delete_cart_item(request, id):
     cart_item = get_object_or_404(CartItem, pk = id)
     if request.method == 'POST':
@@ -160,14 +135,8 @@ def delete_cart_item(request, id):
         messages.success(request, alert)
     return redirect("/user_cart")
 
-<<<<<<< HEAD
 # this is what we can access from store_dash --> store and store info.
 # so below line will not work
-=======
-def store_dash(request):
-   store = Store.objects.filter(user_id=request.user)
-   return render(request, 'marketplace/store_dash.html', {'store': store})
->>>>>>> e54aa33bc5cb2f8d2f7e340a5357fd3e5154f25e
 
 def delete_beer(request, id):
     beer = Beer.objects.get(pk=id)
@@ -217,3 +186,10 @@ def order_history(request):
     orders = Order.objects.filter(profile_id=user_profile).order_by('-order_date')
 
     return render(request, 'marketplace/order_history.html', {'orders': orders})
+
+
+# def fav_or_unfav():
+#     # get the user's profile
+#     # check if beer is in users favourites
+#     # if it is, unfavourite it
+#     # if it isn't, favourite it
