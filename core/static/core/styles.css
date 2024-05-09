@@ -1,4 +1,4 @@
-*{
+* {
   margin: 0px;
   padding: 0px;
   font-family: poppins;
@@ -9,8 +9,8 @@ body {
   margin: 0px;
   padding: 0px;
   font-family: poppins;
-  height: 100vh;
-  background-color: #4B6858;
+  background-color: #4B6858 !important;
+  height: 100vh !important;
 }
 
 ul{
@@ -22,7 +22,7 @@ a{
 
 
 /* navigation bar ============================== */
-.navigation{
+.navigation {
   display: flex;
   justify-content: space-between;
   align-items: center;

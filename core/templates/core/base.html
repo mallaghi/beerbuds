@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  {% load static %}
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="{% static 'core/styles.css' %}">
-  {% comment %} Using FontAwesome============================================= {% endcomment %}
-  <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
-  <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
-  {% comment %} Import Poppins Font Family ====================================={% endcomment %}
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-  <title> {% block title%} {% endblock %} | BeerBuds 🍻  </title>
-</head>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{% static 'core/styles.css' %}">
+    {% comment %} Using FontAwesome============================================= {% endcomment %}
+    <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
+    <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    {% comment %} Import Poppins Font Family ====================================={% endcomment %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <title> {% block title%} {% endblock %} | BeerBuds 🍻  </title>
+  </head>
 
-<body>
+  <body>
     {% comment %} Navigation bar============================== {% endcomment %}
     <nav class= "navigation">
       <a href="{% url 'core:home' %}" class="logo">Beerbuds</a>
@@ -109,5 +109,5 @@
       </div>
       <span class="copyright">Copyright 2024 - BeerBuds</span>
     </footer>
-</body>
+  </body>
 </html>
