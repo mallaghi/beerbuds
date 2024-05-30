@@ -38,6 +38,7 @@ a{
   align-items: center;
   padding: 20px 10%;
   margin: auto;
+  position: fixed;
   left: 0px;
   top: 0px;
   width: 100%;
