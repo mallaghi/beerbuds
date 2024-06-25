@@ -25,6 +25,7 @@ body {
 ul{
   list-style: none;
 }
+
 a{
   text-decoration: none;
 }
@@ -52,7 +53,7 @@ a{
   display: flex;
 }
 
-.menu li a{
+.menu li a {
   margin: 5px;
   padding: 5px 20px;
   color: #ffffff;
@@ -60,7 +61,7 @@ a{
   opacity: 0.4;
   transition: all ease 0.3s;
 }
-.menu li a:hover{
+.menu li a:hover {
   opacity: 1;
   transition: all ease 0.3s;
 }
@@ -443,4 +444,8 @@ footer {
   width: 100%;
   height: auto;
   margin-top: 16px;
+}
+
+.jump-link {
+  scroll-margin-top: 12px;
 }

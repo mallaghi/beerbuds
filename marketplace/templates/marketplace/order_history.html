@@ -3,8 +3,9 @@
 {% block title %}Your Orders{% endblock %}
 
 {% block content %}
-    <h1>Your Orders</h1>
 
+  <div class="pt-24">
+    <h1>Your Orders</h1>
     {% if orders %}
         {% for order in orders %}
             <div>
@@ -24,4 +25,6 @@
     {% else %}
         <p>You do not have any orders yet.</p>
     {% endif %}
+  </div>
+
 {% endblock %}
