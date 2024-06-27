@@ -107,13 +107,10 @@ def add_to_cart(request, beer_id):
     beer = get_object_or_404(Beer, id=beer_id)
 
     if request.method == 'POST':
-        form = CartItemForm(request.POST)
-
-        if form.is_valid():
-            quantity = form.cleaned_data['quantity']
+        cart_form = CartItemForm(request.POST)
+        if cart_form.is_valid():
+            quantity = cart_form.cleaned_data['quantity']
             user_carts = Cart.objects.filter(profile_id=user_profile)
-
-
             if user_carts:
                 user_cart = user_carts[0]
             else:
