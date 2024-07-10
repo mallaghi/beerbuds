@@ -53,7 +53,7 @@ def beer_show(request, id):
     return render(request, 'marketplace/beer_show.html', {
         'beer': beer,
         'beer_reviews': reviews,
-        'cart_form': cart_form,
+        'form': cart_form,
         'beer_in_cart': beer_in_cart,
         'favourites_form': favourites_form,
         'has_favourited': has_favourited
